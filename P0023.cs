@@ -45,58 +45,43 @@ namespace P0023
                 list[2] = node1;
             };
 
-            MergeKLists(list);
             var expected = new int[] { 1, 1, 2, 3, 4, 4, 5, 6, 8 };
-
+            var head = MergeKLists(list);
             var next = head;
             int i = 0;
-            while(next != null)
+            while (next != null)
             {
                 Console.WriteLine(next.val);
                 Assert.AreEqual(expected[i++], next.val);
                 next = next.next;
             }
-
         }
 
-        public ListNode head = null;
-        public ListNode tail = null;
-        public PriorityQueue<(int, ListNode), int> queue = new PriorityQueue<(int, ListNode), int>();
 
         public ListNode MergeKLists(ListNode[] lists)
         {
             if (lists == null || lists.Length == 0) return null;
+            var head = new ListNode(0, null);
+            var tail = head;
 
-
+            var queue = new PriorityQueue<(int, ListNode), int>();
             for (int i = 0; i < lists.Length; i++)
             {
                 queue.Enqueue((i, lists[i]), lists[i].val);
             }
 
-            if (queue.Count > 0)
-            {
-                var first = queue.Dequeue();
-                head = new ListNode(first.Item2.val, null);
-                tail = head;
-                if (first.Item2.next != null)
-                {
-                    queue.Enqueue((first.Item1, first.Item2.next), first.Item2.next.val);
-                }
-            }
-
             while (queue.Count > 0)
             {
-                var dequeued = queue.Dequeue();
-                tail.next = new ListNode(dequeued.Item2.val, null);
+                var cur = queue.Dequeue();
+                tail.next = cur.Item2;
                 tail = tail.next;
-                if (dequeued.Item2.next != null)
+                if (tail.next != null)
                 {
-                    queue.Enqueue((dequeued.Item1, dequeued.Item2.next), dequeued.Item2.next.val);
+                    queue.Enqueue((cur.Item1, tail.next), tail.next.val);
                 }
             }
 
-            return head;
-
+            return head.next;
         }
 
     }
