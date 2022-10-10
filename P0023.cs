@@ -55,6 +55,7 @@ namespace P0023
         public ListNode MergeKLists(ListNode[] lists)
         {
             if (lists == null || lists.Length == 0) return null;
+            //sentinel node
             var head = new ListNode(0, null);
             var tail = head;
             var queue = new PriorityQueue<(int, ListNode), int>();
