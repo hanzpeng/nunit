@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NUnitTests
 {
-    internal class P0021_MergeTwoortedLists
+    internal class P0021_MergeTwoSortedLists
     {
         public class ListNode
         {
