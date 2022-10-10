@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace NUnitTests
+namespace P0410_SplitArrayLargestSum
 {
     internal class P0410_SplitArrayLargestSum
     {

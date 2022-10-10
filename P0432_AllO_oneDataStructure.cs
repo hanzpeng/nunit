@@ -1,12 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
-namespace NUnitTests
+
+namespace P0432_AllO_oneDataStructure
 {
     internal class P0432_AllO_oneDataStructure
     {

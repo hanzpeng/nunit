@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Linq;
 
-namespace Libo_Google
+namespace zzzLibo_Google
 {
     class PLibo
     {

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-namespace Leetcode
+namespace P2065
 {
     public class P2065
     {

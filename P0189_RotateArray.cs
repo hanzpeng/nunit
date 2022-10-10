@@ -1,5 +1,5 @@
 using NUnit.Framework;
-namespace Leetcode
+namespace P0189_RotateArray
 {
     public class P0189_RotateArray
     {

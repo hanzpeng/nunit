@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-namespace Leetcode
+namespace P0098_ValidBST
 {
     public class P0098_ValidBST
     {

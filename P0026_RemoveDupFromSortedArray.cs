@@ -1,5 +1,5 @@
 using NUnit.Framework;
-namespace Leetcode
+namespace P0026_RemoveDupFromSortedArray
 {
     public class P0026_RemoveDupFromSortedArray
     {

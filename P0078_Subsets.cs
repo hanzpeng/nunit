@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using NUnit.Framework;
-namespace Leetcode
+namespace P0078_Subsets
 {
     public class P0078_Subsets
     {

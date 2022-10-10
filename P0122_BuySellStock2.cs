@@ -1,5 +1,5 @@
 using NUnit.Framework;
-namespace Leetcode
+namespace P0122_BuyuSellStock2
 {
     public class P0122_BuyuSellStock2
     {

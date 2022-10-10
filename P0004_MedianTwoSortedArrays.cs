@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace NUnitTests
+namespace P0004_MedianTwoSortedArrays
 {
     internal class P0004_MedianTwoSortedArrays
     {

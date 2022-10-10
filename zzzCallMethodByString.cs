@@ -2,7 +2,7 @@
 using System.Reflection;
 using NUnit.Framework;
 
-namespace CallMethodByString
+namespace zzzCallMethodByString
 {
     public class zzzCallMethodByString
     {

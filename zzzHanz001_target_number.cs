@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 
-namespace Hanz001_target_number
+namespace zzzHanz001_target_number
 {
     class zzzHanz001_target_number
     {

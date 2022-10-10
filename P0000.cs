@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-namespace NUnitTests
+namespace P0000
 {
     public class P0000
     {

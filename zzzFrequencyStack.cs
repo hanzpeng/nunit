@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace NUnitTests
+namespace zzzFrequencyStack
 {
     internal class zzzFrequencyStack
     {
