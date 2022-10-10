@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace CallMethodByString
 {
-    public class CallMethodByString
+    public class zzzCallMethodByString
     {
         [Test]
         public void Test1()

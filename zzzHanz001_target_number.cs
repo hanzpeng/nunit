@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Hanz001_target_number
 {
-    class Hanz001_target_number
+    class zzzHanz001_target_number
     {
         /****************************************************************************
         https://www.geeksforgeeks.org/number-of-ways-to-calculate-a-target-number-using-only-array-elements/
