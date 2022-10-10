@@ -25,7 +25,7 @@ namespace NUnitTests
             {
                 var l1 = list1;
                 var l2 = list2;
-                //first node is cardinal node
+                //first node is sentinel node
                 ListNode l = new ListNode();
                 ListNode head = l;
                 while (l1 != null && l2 != null)
