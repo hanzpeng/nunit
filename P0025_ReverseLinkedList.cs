@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoFixture;
 using NUnit.Framework;
 
 namespace P0025_ReverseLinkedList
