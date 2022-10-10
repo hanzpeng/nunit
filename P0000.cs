@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-namespace Leetcode 
+namespace NUnitTests
 {
     public class P0000
     {
