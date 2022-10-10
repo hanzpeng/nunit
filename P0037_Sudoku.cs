@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit;
 
-namespace NUnitTestProject1
+namespace NUnitTests
 {
     public class P0037_Sudoku
     {

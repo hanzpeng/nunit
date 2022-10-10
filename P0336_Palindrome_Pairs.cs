@@ -4,7 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 
 
-namespace NUnitTestProject1
+namespace NUnitTests
 {
 
     class P0336_Palindrome_Pairs_Trie

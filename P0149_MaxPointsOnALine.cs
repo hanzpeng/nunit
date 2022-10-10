@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NUnitTestProject1
+namespace NUnitTests
 {
     internal class P0149_MaxPointsOnALine_Sloap
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NUnitTestProject1
+namespace NUnitTests
 {
     internal class P0132_PalindromePartitioning2
     {

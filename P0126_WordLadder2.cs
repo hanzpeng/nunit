@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NUnitTestProject1
+namespace NUnitTests
 {
     internal class P0126_WordLadder2
     {
