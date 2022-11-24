@@ -51,40 +51,33 @@ namespace P0090_SubsetsII
 
     }
 
-    public class Solution2
+    public class SolutionB
     {
         public IList<IList<int>> SubsetsWithDup(int[] nums)
         {
-            Dictionary<int, int> numsMap = new Dictionary<int, int>();
+            Dictionary<int, int> numCount = new Dictionary<int, int>();
             foreach (int num in nums)
             {
-                numsMap[num] = numsMap.GetValueOrDefault(num, 0) + 1;
+                numCount[num] = numCount.GetValueOrDefault(num, 0) + 1;
             }
-
-            IList<IList<int>> result = new List<IList<int>>();
-            Dfs(numsMap, new List<int>(numsMap.Keys), new Stack<int>(), result, 0);
-            return result;
+            IList<IList<int>> res = new List<IList<int>>();
+            Dfs(numCount, new List<int>(numCount.Keys), new Stack<int>(), res, 0);
+            return res;
         }
-        void Dfs(Dictionary<int, int> numsMap, List<int> keys, Stack<int> cur, IList<IList<int>> res, int index)
+        void Dfs(Dictionary<int, int> numCount, List<int> keys, Stack<int> cur, IList<IList<int>> res, int index)
         {
             if (index == keys.Count)
             {
                 res.Add(new List<int>(cur));
                 return;
             }
-
-            Dfs(numsMap, keys, cur, res, index + 1);
-
-            var curKey = keys[index];
-            var count = numsMap[curKey];
-
-            for (int i = 1; i <= count; i++)
+            for (int i = 1; i <= numCount[keys[index]]; i++)
             {
-                for (int j = 0; j < i; j++) cur.Push(curKey);
-                Dfs(numsMap, keys, cur, res, index + 1);
+                for (int j = 0; j < i; j++) cur.Push(keys[index]);
+                Dfs(numCount, keys, cur, res, index + 1);
                 for (int j = 0; j < i; j++) cur.Pop();
             }
-
+            Dfs(numCount, keys, cur, res, index + 1);
         }
     }
 }
