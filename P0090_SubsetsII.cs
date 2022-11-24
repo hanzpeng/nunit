@@ -28,6 +28,7 @@ namespace P0090_SubsetsII
         {
             var res = new List<IList<int>>();
             if (nums?.Length == 0) return res;
+            Array.Sort(nums);
             dfs(nums, res, new Stack<int>(), 0);
             return res;
         }
