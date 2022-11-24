@@ -41,12 +41,12 @@ namespace NUnitTests
 
             public string GetHash(string s)
             {
-                var counts = new int[26];
+                var charCounts = new int[26];
                 foreach (char c in s.ToCharArray())
                 {
-                    ++counts[c - 'a'];
+                    ++charCounts[c - 'a'];
                 }
-                return string.Join(".", counts);
+                return string.Join(".", charCounts);
             }
         }
     }
