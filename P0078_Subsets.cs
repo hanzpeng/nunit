@@ -62,7 +62,7 @@ namespace P0078_Subsets
             return l;
         }
 
-        public IList<IList<int>> Subsetsb(int[] nums)
+        public IList<IList<int>> Subsets_B(int[] nums)
         {
             var res = new List<IList<int>>();
             if (nums?.Length == 0) return res;
