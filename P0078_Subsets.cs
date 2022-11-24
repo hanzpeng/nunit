@@ -61,5 +61,28 @@ namespace P0078_Subsets
             }
             return l;
         }
+
+        public IList<IList<int>> Subsetsb(int[] nums)
+        {
+            var res = new List<IList<int>>();
+            if (nums?.Length == 0) return res;
+            dfs(nums, res, new Stack<int>(), 0);
+            return res;
+        }
+        public void dfs(int[] nums, IList<IList<int>> res, Stack<int> cur, int index)
+        {
+            if (index == nums.Length)
+            {
+                res.Add(new List<int>(cur));
+                return;
+            }
+
+            dfs(nums, res, cur, index + 1);
+
+            cur.Push(nums[index]);
+            dfs(nums, res, cur, index + 1);
+            cur.Pop();
+        }
+
     }
 }
