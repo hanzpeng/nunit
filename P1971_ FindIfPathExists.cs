@@ -9,7 +9,7 @@ namespace NUnitTests
     internal class P1971__FindIfPathExists
     {
     }
-    public class Solution1
+    public class Solution_UnionFind
     {
         public bool ValidPath(int n, int[][] edges, int source, int destination)
         {
@@ -43,5 +43,43 @@ namespace NUnitTests
         }
     }
 
-
+    public class Solution_BFS
+    {
+        public bool ValidPath(int n, int[][] edges, int source, int destination)
+        {
+            if (destination == source) return true;
+            var children = new List<int>[n];
+            for (int i = 0; i < n; i++)
+            {
+                children[i] = new List<int>();
+            }
+            foreach (int[] edge in edges)
+            {
+                children[edge[0]].Add(edge[1]);
+                children[edge[1]].Add(edge[0]);
+            }
+            var q = new Queue<int>();
+            var visited = new HashSet<int>();
+            q.Enqueue(source);
+            visited.Add(source);
+            while (q.Count > 0)
+            {
+                var count = q.Count();
+                for (int i = 0; i < count; i++)
+                {
+                    var cur = q.Dequeue();
+                    foreach (var child in children[cur])
+                    {
+                        if (child == destination) return true;
+                        if (!visited.Contains(child))
+                        {
+                            q.Enqueue(child);
+                            visited.Add(child);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
 }
