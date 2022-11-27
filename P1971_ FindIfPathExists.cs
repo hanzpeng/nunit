@@ -82,4 +82,43 @@ namespace NUnitTests
             return false;
         }
     }
+
+    public class Solution_DFS
+    {
+        public bool ValidPath(int n, int[][] edges, int source, int destination)
+        {
+            if (destination == source) return true;
+            var children = new List<int>[n];
+            for (int i = 0; i < n; i++)
+            {
+                children[i] = new List<int>();
+            }
+            foreach (int[] edge in edges)
+            {
+                children[edge[0]].Add(edge[1]);
+                children[edge[1]].Add(edge[0]);
+            }
+            bool found = false;
+            Dfs(children, source, destination, new bool[n], ref found);
+            return found;
+        }
+
+        public void Dfs(List<int>[] children, int cur, int destination, bool[] visited, ref bool found)
+        {
+            foreach (var child in children[cur])
+            {
+                if (child == destination)
+                {
+                    found = true;
+                    return;
+                }
+                if (!visited[child])
+                {
+                    visited[child] = true; ;
+                    Dfs(children, child, destination, visited, ref found);
+                    if (found) return;
+                }
+            }
+        }
+    }
 }
