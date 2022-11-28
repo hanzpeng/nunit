@@ -35,11 +35,11 @@ namespace NUnitTests
             }
         }
 
-        public int find(int point, int[] pr)
+        public int find(int p, int[] id)
         {
-            if (pr[point] == point) return point;
-            pr[point] = find(pr[point], pr);
-            return pr[point];
+            if (id[p] == p) return p;
+            id[p] = find(id[p], id);
+            return id[p];
         }
     }
 
