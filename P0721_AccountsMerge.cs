@@ -13,7 +13,7 @@ namespace NUnitTests
             public IList<IList<string>> AccountsMerge(IList<IList<string>> accounts)
             {
                 var nameAccounts = new Dictionary<string, List<IList<string>>>();
-                foreach (var account in accounts)
+                foreach (IList<string> account in accounts)
                 {
                     if (!nameAccounts.ContainsKey(account[0]))
                     {
@@ -23,14 +23,20 @@ namespace NUnitTests
                 }
 
                 var res = new List<IList<string>>();
-                foreach (var sameNameAccounts in nameAccounts.Values)
+                foreach (List<IList<string>> sameNameAccounts in nameAccounts.Values)
                 {
+                    sameNameAccounts.RemoveAt(0);
                     res.AddRange(AccountsMerge1(sameNameAccounts));
                 }
                 return res;
             }
             public List<IList<string>> AccountsMerge1(List<IList<string>> sameNameAccounts)
             {
+                foreach (var account in sameNameAccounts)
+                {
+                    account.RemoveAt(0);
+                }
+
                 var res = new List<IList<string>>();
                 var edges = new List<int[]>();
                 var emailSetArray = new HashSet<string>[sameNameAccounts.Count];
@@ -41,6 +47,7 @@ namespace NUnitTests
                 }
                 for (int i = 0; i < sameNameAccounts.Count; i++)
                 {
+                    emailSetArray[i] = new HashSet<string>();
                     for (int j = 1; j < sameNameAccounts[i].Count; j++)
                     {
                         emailSetArray[i].Add(sameNameAccounts[i][j]);
