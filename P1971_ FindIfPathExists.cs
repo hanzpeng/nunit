@@ -14,25 +14,16 @@ namespace NUnitTests
         public bool ValidPath(int n, int[][] edges, int source, int destination)
         {
             var ids = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                ids[i] = i;
-            }
-            union(edges, ids);
+            for (int i = 0; i < n; i++) ids[i] = i;           
+            foreach (var edge in edges) union(edge[0],edge[1], ids);
             return find(source, ids) == find(destination, ids);
         }
 
-        public void union(int[][] edges, int[] ids)
+        public void union(int p0, int p1, int[] ids)
         {
-            foreach (var edge in edges)
-            {
-                var id0 = find(edge[0], ids);
-                var id1 = find(edge[1], ids);
-                if (id0 != id1)
-                {
-                    ids[id0] = id1;
-                }
-            }
+            var id0 = find(p0, ids);
+            var id1 = find(p1, ids);
+            ids[id0] = id1;
         }
 
         public int find(int p, int[] ids)
