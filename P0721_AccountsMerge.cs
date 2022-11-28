@@ -25,13 +25,13 @@ namespace NUnitTests
                 var res = new List<IList<string>>();
                 foreach (List<IList<string>> sameNameAccounts in nameAccounts.Values)
                 {
-                    sameNameAccounts.RemoveAt(0);
                     res.AddRange(AccountsMerge1(sameNameAccounts));
                 }
                 return res;
             }
             public List<IList<string>> AccountsMerge1(List<IList<string>> sameNameAccounts)
             {
+                var name = sameNameAccounts[0][0];
                 foreach (var account in sameNameAccounts)
                 {
                     account.RemoveAt(0);
@@ -39,25 +39,17 @@ namespace NUnitTests
 
                 var res = new List<IList<string>>();
                 var edges = new List<int[]>();
-                var emailSetArray = new HashSet<string>[sameNameAccounts.Count];
                 var ids = new int[sameNameAccounts.Count];
                 for (int i = 0; i < sameNameAccounts.Count; i++)
                 {
                     ids[i] = i;
                 }
-                for (int i = 0; i < sameNameAccounts.Count; i++)
+
+                for (int i = 0; i < sameNameAccounts.Count - 1; i++)
                 {
-                    emailSetArray[i] = new HashSet<string>();
-                    for (int j = 1; j < sameNameAccounts[i].Count; j++)
+                    for (int j = 1; j < sameNameAccounts.Count; j++)
                     {
-                        emailSetArray[i].Add(sameNameAccounts[i][j]);
-                    }
-                }
-                for (int i = 0; i < emailSetArray.Length - 1; i++)
-                {
-                    for (int j = 1; j < emailSetArray.Length; j++)
-                    {
-                        if (emailSetArray[i].Where(email => emailSetArray[j].Contains(email)).Any())
+                        if (sameNameAccounts[i].Where(email => sameNameAccounts[j].Contains(email)).Any())
                         {
                             Union(i, j, ids);
                         }
@@ -79,11 +71,11 @@ namespace NUnitTests
                     var emails = new HashSet<string>();
                     foreach (int i in idList)
                     {
-                        emails.UnionWith(emailSetArray[i]);
+                        emails.UnionWith(sameNameAccounts[i]);
                     }
                     var emailsList = emails.ToList();
                     emailsList.Sort();
-                    emailsList.Insert(0, sameNameAccounts[0][0]);
+                    emailsList.Insert(0, name);
                     res.Add(emailsList);
                 }
 
