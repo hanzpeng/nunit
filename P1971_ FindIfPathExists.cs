@@ -15,21 +15,20 @@ namespace NUnitTests
         {
             var ids = new int[n];
             for (int i = 0; i < n; i++) ids[i] = i;           
-            foreach (var edge in edges) union(edge[0],edge[1], ids);
-            return find(source, ids) == find(destination, ids);
+            foreach (var edge in edges) Union(edge[0],edge[1], ids);
+            return Find(source, ids) == Find(destination, ids);
         }
 
-        public void union(int p0, int p1, int[] ids)
+        public void Union(int p0, int p1, int[] ids)
         {
-            var id0 = find(p0, ids);
-            var id1 = find(p1, ids);
+            var id0 = Find(p0, ids);
+            var id1 = Find(p1, ids);
             ids[id0] = id1;
         }
 
-        public int find(int p, int[] ids)
+        public int Find(int p, int[] ids)
         {
-            if (ids[p] == p) return p;
-            ids[p] = find(ids[p], ids);
+            if (ids[p] != p) ids[p] = Find(ids[p], ids);
             return ids[p];
         }
     }
