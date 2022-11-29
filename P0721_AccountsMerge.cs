@@ -25,29 +25,27 @@ namespace NUnitTests
                 var res = new List<IList<string>>();
                 foreach (List<IList<string>> sameNameAccounts in nameAccounts.Values)
                 {
-                    res.AddRange(AccountsMerge1(sameNameAccounts));
+                    res.AddRange(AccountsMergeWithSameName(sameNameAccounts));
                 }
                 return res;
             }
-            public List<IList<string>> AccountsMerge1(List<IList<string>> sameNameAccounts)
+            public List<IList<string>> AccountsMergeWithSameName(List<IList<string>> sameNameAccounts)
             {
                 var name = sameNameAccounts[0][0];
+                //remvoe name, which is the first element in each list
                 foreach (var account in sameNameAccounts)
                 {
                     account.RemoveAt(0);
                 }
-
                 var res = new List<IList<string>>();
-                var edges = new List<int[]>();
                 var ids = new int[sameNameAccounts.Count];
                 for (int i = 0; i < sameNameAccounts.Count; i++)
                 {
                     ids[i] = i;
                 }
-
                 for (int i = 0; i < sameNameAccounts.Count - 1; i++)
                 {
-                    for (int j = 1; j < sameNameAccounts.Count; j++)
+                    for (int j = i + 1; j < sameNameAccounts.Count; j++)
                     {
                         if (sameNameAccounts[i].Where(email => sameNameAccounts[j].Contains(email)).Any())
                         {
@@ -55,26 +53,23 @@ namespace NUnitTests
                         }
                     }
                 }
-                var rootIdList = new Dictionary<int, List<int>>();
-                foreach (var i in ids)
+                var rootIdEmails = new Dictionary<int, List<string>>();
+                for (int i = 0; i < sameNameAccounts.Count; i++)
                 {
                     var rootId = Find(i, ids);
-                    if (!rootIdList.ContainsKey(rootId))
+                    if (!rootIdEmails.ContainsKey(rootId))
                     {
-                        rootIdList.Add(rootId, new List<int>());
+                        rootIdEmails.Add(rootId, new List<string>());
                     }
-                    rootIdList[rootId].Add(i);
+                    rootIdEmails[rootId].AddRange(sameNameAccounts[i]);
                 }
 
-                foreach (var idList in rootIdList.Values)
+                foreach (var values in rootIdEmails.Values)
                 {
-                    var emails = new HashSet<string>();
-                    foreach (int i in idList)
-                    {
-                        emails.UnionWith(sameNameAccounts[i]);
-                    }
+                    var emails = new HashSet<string>(values);
                     var emailsList = emails.ToList();
-                    emailsList.Sort();
+                    //c# uses UTF-16 to sort characters. switch to ASCII order. otherwise the testing case like '..._...' and '...0...' will fail.
+                    emailsList.Sort(StringComparer.Ordinal);
                     emailsList.Insert(0, name);
                     res.Add(emailsList);
                 }
