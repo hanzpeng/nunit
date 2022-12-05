@@ -18,28 +18,20 @@ namespace NUnitTests
             public ListNode AddTwoNumbers(ListNode l1, ListNode l2, int carry)
             {
                 if (l1 == null && l2 == null && carry == 0)
-                    return null;
-                else if (l1 == null && l2 == null)
-                    return new ListNode(carry, null);
-                else if (l1 == null || l2 == null)
                 {
-                    ListNode l = l1 != null ? l1 : l2;
-                    var total = l.val + carry;
-                    if (total / 10 == 0)
-                    {
-                        return new ListNode(total % 10, l.next);
-                    }
-                    else
-                    {
-                        return new ListNode(total % 10, AddTwoNumbers(l.next, null, total / 10));
-                    }
+                    return null;
                 }
                 else
                 {
-                    var total = l1.val + l2.val + carry;
-                    return new ListNode(total % 10, AddTwoNumbers(l1.next, l2.next, total / 10));
+                    int i1 = 0;
+                    int i2 = 0;
+                    if (l1 != null) i1 = l1.val;
+                    if (l2 != null) i2 = l2.val;
+                    int total = i1 + i2 + carry;
+                    return new ListNode(total % 10, AddTwoNumbers(l1?.next, l2?.next, total / 10));
                 }
             }
+
             public class ListNode
             {
                 public int val;
