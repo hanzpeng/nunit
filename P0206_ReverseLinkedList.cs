@@ -11,6 +11,7 @@ namespace NUnitTests
         public ListNode ReverseListRecursive(ListNode head)
         {
             if(head == null || head.next == null) return head;
+
             var current = head.next;
             var newHead = ReverseListRecursive(current);
             current.next = head;
@@ -21,17 +22,17 @@ namespace NUnitTests
 
         public ListNode ReverseListIterative(ListNode head)
         {
-            if (head == null) return null;
-            var current = head.next;
-            head.next = null;
-            while (current != null)
+            if (head == null || head.next == null) return head;
+            ListNode pre = null;
+            var cur = head;
+            while (cur != null)
             {
-                var temp = current.next;
-                current.next = head;
-                head = current;
-                current = temp;
+                var temp = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = temp;
             }
-            return head;
+            return pre;
         }
 
         public class ListNode
