@@ -12,7 +12,7 @@ namespace NUnitTests
         {
             public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
             {
-                return AddTwoNumbers(l1, l2, 0);
+                return AddTwoNumbers_Recur(l1, l2, 0);
             }
 
             public ListNode AddTwoNumbers_Recur(ListNode l1, ListNode l2, int carry)
@@ -28,15 +28,14 @@ namespace NUnitTests
                     if (l1 != null) i1 = l1.val;
                     if (l2 != null) i2 = l2.val;
                     int total = i1 + i2 + carry;
-                    return new ListNode(total % 10, AddTwoNumbers(l1?.next, l2?.next, total / 10));
+                    return new ListNode(total % 10, AddTwoNumbers_Recur(l1?.next, l2?.next, total / 10));
                 }
             }
 
             public ListNode AddTwoNumbers_Iter(ListNode l1, ListNode l2)
             {
-                ListNode cur = new ListNode();
-                ListNode dummyHead = new ListNode(0, cur);
-                ListNode tail = dummyHead;
+                ListNode head = new ListNode();
+                ListNode cur = head;
                 int carry = 0;
                 while (l1 != null || l2 != null || carry != 0)
                 {
@@ -54,13 +53,10 @@ namespace NUnitTests
                     }
                     int total = i1 + i2 + carry;
                     carry = total / 10;
-                    cur.val = total % 10;
-                    cur.next = new ListNode();
-                    tail = cur;
+                    cur.next = new ListNode(total % 10);
                     cur = cur.next;
                 }
-                tail.next = null;
-                return dummyHead.next;
+                return head.next;
             }
 
             public class ListNode
