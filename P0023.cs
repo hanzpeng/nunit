@@ -51,8 +51,27 @@ namespace P0023
                 next = next.next;
             }
         }
-
         public ListNode MergeKLists(ListNode[] lists)
+        {
+            if (lists == null || lists.Length == 0) return null;
+            var heap = new PriorityQueue<ListNode, int>();
+            var dummy = new ListNode();
+            var cur = dummy;
+            foreach (var node in lists)
+            {
+                if (node != null) heap.Enqueue(node, node.val);
+            }
+            while (heap.Count > 0)
+            {
+                var node = heap.Dequeue();
+                cur.next = new ListNode(node.val);
+                cur = cur.next;
+                if (node.next != null) heap.Enqueue(node.next, node.next.val);
+            }
+            return dummy.next;
+        }
+
+        public ListNode MergeKLists2(ListNode[] lists)
         {
             if (lists == null || lists.Length == 0) return null;
             //sentinel node
