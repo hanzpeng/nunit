@@ -9,13 +9,13 @@ namespace NUnitTests
     internal class P0297_SerializeandDeserializeBinaryTree
     {
     }
-    public class TreeNode
-    {
-        public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int x) { val = x; }
-    }
+    //public class TreeNode
+    //{
+    //    public int val;
+    //    public TreeNode left;
+    //    public TreeNode right;
+    //    public TreeNode(int x) { val = x; }
+    //}
     public class Codec
     {
         // Encodes a tree to a single string.
