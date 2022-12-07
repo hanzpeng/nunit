@@ -3,7 +3,62 @@ using NUnit.Framework;
 
 namespace P0025_ReverseLinkedList
 {
-    class P0025_ReverseLinkedList
+    public class Solution1
+    {
+        public ListNode ReverseKGroup(ListNode head, int k)
+        {
+            if (head == null || head.next == null) return head;
+            ListNode dummy = new ListNode();
+            var cur = head;
+            var tail = dummy;
+            while (cur != null)
+            {
+                tail.next = ReverseKGroupHelper(cur, k, out ListNode remain);
+                tail = cur;
+                cur = remain;
+            }
+            return dummy.next;
+        }
+
+        public ListNode ReverseKGroupHelper(ListNode head, int k, out ListNode remain)
+        {
+            ListNode pre = null;
+            var cur = head;
+            while (cur != null && k > 0)
+            {
+                var cur_next = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = cur_next;
+                k--;
+            }
+            remain = cur;
+            if (k > 0)
+            {
+                return Reverse(pre);
+            }
+            else
+            {
+                return pre;
+            }
+        }
+        public ListNode Reverse(ListNode head)
+        {
+            if (head == null || head.next == null) return head;
+            ListNode pre = null;
+            var cur = head;
+            while (cur != null)
+            {
+                var cur_next = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = cur_next;
+            }
+            return pre;
+        }
+    }
+
+    public class Solution2
     {
 
         [Test]
@@ -54,21 +109,18 @@ namespace P0025_ReverseLinkedList
         public ListNode ReverseKGroup(ListNode head, int k)
         {
             if (head == null || head.next == null) return head;
-
-            var res = ReverseK(head, k);
-            head = res[0];
-            ListNode tail = res[1];
-            ListNode cur = res[2];
-
+            var dummy = new ListNode();
+            ListNode tail = dummy;
+            ListNode cur = head;
             while (cur != null)
             {
-                res = ReverseK(cur, k);
+                var res = ReverseK(cur, k);
                 tail.next = res[0];
                 tail = res[1];
                 cur = res[2];
             }
 
-            return head;
+            return dummy.next;
         }
 
         public ListNode[] ReverseK(ListNode head, int k)
@@ -110,11 +162,16 @@ namespace P0025_ReverseLinkedList
             return new ListNode[] { head, tail, cur }; // head, tail, nextHead
         }
 
-        public class ListNode
-        {
-            public int val;
-            public ListNode next;
-            public ListNode(int x) { val = x; }
-        }
+
     }
+
+    public class ListNode
+    {
+        public int val;
+        public ListNode next;
+        public ListNode(int x) { val = x; }
+        public ListNode() { }
+    }
+
+
 }
