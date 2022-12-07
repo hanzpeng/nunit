@@ -18,11 +18,7 @@ namespace NUnitTests
             public int WithNode(TreeNode root, long target)
             {
                 if (root == null) return 0;
-                int count = 0;
-                if (target == root.val) count++;
-                count += WithNode(root.left, target - root.val);
-                count += WithNode(root.right, target - root.val);
-                return count;
+                return WithNode(root.left, target - root.val) + WithNode(root.right, target - root.val) + (target == root.val ? 1 : 0);
             }
         }
     }
