@@ -13,12 +13,12 @@ namespace NUnitTests
             public int PathSum(TreeNode root, int targetSum)
             {
                 if (root == null) return 0;
-                return PathSum(root.left, targetSum) + PathSum(root.right, targetSum) + WithNode(root, targetSum);
+                return PathSum(root.left, targetSum) + PathSum(root.right, targetSum) + StartPathSum(root, targetSum);
             }
-            public int WithNode(TreeNode root, long target)
+            public int StartPathSum(TreeNode root, long target)
             {
                 if (root == null) return 0;
-                return WithNode(root.left, target - root.val) + WithNode(root.right, target - root.val) + (target == root.val ? 1 : 0);
+                return StartPathSum(root.left, target - root.val) + StartPathSum(root.right, target - root.val) + (target == root.val ? 1 : 0);
             }
         }
     }
