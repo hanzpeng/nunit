@@ -43,5 +43,41 @@ namespace NUnitTests
                 return true;
             }
         }
+
+        public class Solution2
+        {
+            public bool CanFinish(int numCourses, int[][] prerequisites)
+            {
+                var prereq = new List<int>[numCourses];
+                for (int i = 0; i < numCourses; i++)
+                {
+                    prereq[i] = new List<int>();
+                }
+                foreach (var pr in prerequisites)
+                {
+                    prereq[pr[0]].Add(pr[1]);
+                }
+                HashSet<int> visiting = new();
+                for (int i = 0; i < numCourses; i++)
+                {
+                    if (!Dfs(i, prereq, visiting)) return false;
+                }
+                return true;
+            }
+
+            bool Dfs(int i, List<int>[] prereq, HashSet<int> visiting)
+            {
+                if (visiting.Contains(i)) return false;
+                if (prereq[i].Count == 0) return true;
+                visiting.Add(i);
+                foreach (int j in prereq[i])
+                {
+                    if (!Dfs(j, prereq, visiting)) return false;
+                }
+                prereq[i] = new List<int>();
+                visiting.Remove(i);
+                return true;
+            }
+        }
     }
 }
