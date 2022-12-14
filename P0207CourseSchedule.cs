@@ -10,34 +10,34 @@ namespace NUnitTests
     {
         public bool CanFinish(int numCourses, int[][] prerequisites)
         {
-            var g = new List<int>[numCourses];
+            var prereq = new List<int>[numCourses];
             for (int i = 0; i < numCourses; i++)
             {
-                g[i] = new List<int>();
+                prereq[i] = new List<int>();
             }
             foreach (var pr in prerequisites)
             {
-                g[pr[0]].Add(pr[1]);
+                prereq[pr[0]].Add(pr[1]);
             }
-            bool[] visited = new bool[numCourses];
-            HashSet<int> parent = new();
+            bool[] taken = new bool[numCourses];
+            HashSet<int> visiting = new();
             for (int i = 0; i < numCourses; i++)
             {
-                if (!visited[i] && !Dfs(i, g, parent, visited)) return false;
+                if (!taken[i] && !Dfs(i, prereq, visiting, taken)) return false;
             }
             return true;
         }
 
-        bool Dfs(int i, List<int>[] g, HashSet<int> parent, bool[] visited)
+        bool Dfs(int i, List<int>[] prereq, HashSet<int> visiting, bool[] taken)
         {
-            if (parent.Contains(i)) return false;
-            parent.Add(i);
-            foreach (int j in g[i])
+            if (visiting.Contains(i)) return false;
+            visiting.Add(i);
+            foreach (int j in prereq[i])
             {
-                if (!visited[j] && !Dfs(j, g, parent, visited)) return false;
+                if (!taken[j] && !Dfs(j, prereq, visiting, taken)) return false;
             }
-            visited[i] = true;
-            parent.Remove(i);
+            taken[i] = true;
+            visiting.Remove(i);
             return true;
         }
     }
