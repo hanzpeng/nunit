@@ -8,37 +8,40 @@ namespace NUnitTests
 {
     internal class P0207CourseSchedule
     {
-        public bool CanFinish(int numCourses, int[][] prerequisites)
+        public class Solution1
         {
-            var prereq = new List<int>[numCourses];
-            for (int i = 0; i < numCourses; i++)
+            public bool CanFinish(int numCourses, int[][] prerequisites)
             {
-                prereq[i] = new List<int>();
+                var prereq = new List<int>[numCourses];
+                for (int i = 0; i < numCourses; i++)
+                {
+                    prereq[i] = new List<int>();
+                }
+                foreach (var pr in prerequisites)
+                {
+                    prereq[pr[0]].Add(pr[1]);
+                }
+                bool[] taken = new bool[numCourses];
+                HashSet<int> visiting = new();
+                for (int i = 0; i < numCourses; i++)
+                {
+                    if (!taken[i] && !Dfs(i, prereq, visiting, taken)) return false;
+                }
+                return true;
             }
-            foreach (var pr in prerequisites)
-            {
-                prereq[pr[0]].Add(pr[1]);
-            }
-            bool[] taken = new bool[numCourses];
-            HashSet<int> visiting = new();
-            for (int i = 0; i < numCourses; i++)
-            {
-                if (!taken[i] && !Dfs(i, prereq, visiting, taken)) return false;
-            }
-            return true;
-        }
 
-        bool Dfs(int i, List<int>[] prereq, HashSet<int> visiting, bool[] taken)
-        {
-            if (visiting.Contains(i)) return false;
-            visiting.Add(i);
-            foreach (int j in prereq[i])
+            bool Dfs(int i, List<int>[] prereq, HashSet<int> visiting, bool[] taken)
             {
-                if (!taken[j] && !Dfs(j, prereq, visiting, taken)) return false;
+                if (visiting.Contains(i)) return false;
+                visiting.Add(i);
+                foreach (int j in prereq[i])
+                {
+                    if (!taken[j] && !Dfs(j, prereq, visiting, taken)) return false;
+                }
+                taken[i] = true;
+                visiting.Remove(i);
+                return true;
             }
-            taken[i] = true;
-            visiting.Remove(i);
-            return true;
         }
     }
 }
