@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NUnitTests
 {
-    internal class P122_SellStock2
+    internal class P0122_SellStock2
     {
         public int MaxProfit(int[] prices)
         {
