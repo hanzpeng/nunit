@@ -40,13 +40,16 @@ namespace P0090_SubsetsII
                 return;
             }
 
+            // select current value to the set, and then try next value
             cur.Push(nums[index]);
             dfs(nums, res, cur, index + 1);
             cur.Pop();
 
-            if (index + 1 < nums.Length && nums[index + 1] == nums[index])
+            // while next value is a dup, skip next value
+            while (index + 1 < nums.Length && nums[index + 1] == nums[index])
                 index++;
 
+            // not select current value and try next different value
             dfs(nums, res, cur, index + 1);
         }
 
