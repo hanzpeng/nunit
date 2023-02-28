@@ -8,7 +8,39 @@ namespace NUnitTests
 {
     internal class P0005_LongestPalindromicSubstring
     {
-        public class Solution
+        public class Solution1
+        {
+            public string LongestPalindrome(string s)
+            {
+                if (String.IsNullOrEmpty(s)) return s;
+                string dp = s.Substring(0, 1);
+                for (int i = 0; i < s.Length - 1; i++)
+                {
+                    var cur = PalindromeWithMiddleAt(i, i, s);
+                    dp = cur.Length >= dp.Length ? cur : dp;
+                    if (s[i] == s[i + 1])
+                    {
+                        cur = PalindromeWithMiddleAt(i, i + 1, s);
+                        dp = cur.Length >= dp.Length ? cur : dp;
+                    }
+                }
+                return dp;
+            }
+
+            public string PalindromeWithMiddleAt(int i, int j, string s)
+            {
+                var l = i;
+                var r = j;
+                while (l > 0 && r < s.Length - 1 && s[l - 1] == s[r + 1])
+                {
+                    l--;
+                    r++;
+                }
+                return s.Substring(l, r + 1 - l);
+            }
+        }
+
+        public class Solution2
         {
             public string LongestPalindrome(string s)
             {
