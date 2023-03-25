@@ -45,25 +45,25 @@ namespace NUnitTests
             public IList<IList<int>> Permute(int[] nums)
             {
                 var res = new List<IList<int>>();
-                var set = new HashSet<int>(nums);
-                dfs(set, res, new Stack<int>());
+                var remain = new HashSet<int>(nums);
+                dfs(remain, res, new Stack<int>());
                 return res;
             }
 
-            public void dfs(HashSet<int> set, List<IList<int>> res, Stack<int> cur)
+            public void dfs(HashSet<int> remain, List<IList<int>> res, Stack<int> pre)
             {
-                if (set.Count == 0)
+                if (remain.Count == 0)
                 {
-                    res.Add(cur.ToList());
+                    res.Add(pre.ToList());
                     return;
                 }
-                foreach (var v in set)
+                foreach (var v in remain)
                 {
-                    cur.Push(v);
-                    var nextSet = new HashSet<int>(set);
-                    nextSet.Remove(v);
-                    dfs(nextSet, res, cur);
-                    cur.Pop();
+                    pre.Push(v);
+                    var nextRemain = new HashSet<int>(remain);
+                    nextRemain.Remove(v);
+                    dfs(nextRemain, res, pre);
+                    pre.Pop();
                 }
             }
         }
