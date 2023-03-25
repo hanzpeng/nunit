@@ -10,11 +10,12 @@ namespace NUnitTests
     {
         public class TrieNode
         {
-            public Dictionary<string, TrieNode> Children = new();
+            public Dictionary<string, TrieNode> Children;
             public int value;
-            public TrieNode(int value)
+            public TrieNode(int val)
             {
-                this.value = value;
+                Children = new Dictionary<string, TrieNode>();
+                this.value = val;
             }
         }
         public class FileSystem
@@ -33,10 +34,9 @@ namespace NUnitTests
                 path = path.Trim();
                 var sections = path.Split('/');
                 var node = trie;
-                var section = "";
                 for (int i = 1; i < sections.Length - 1; i++)
                 {
-                    section = sections[i];
+                    var section = sections[i];
                     if (node.Children.ContainsKey(section))
                     {
                         node = node.Children[section];
@@ -66,10 +66,9 @@ namespace NUnitTests
                 path = path.Trim();
                 var sections = path.Split('/');
                 var node = trie;
-                var section = "";
                 for (int i = 1; i < sections.Length; i++)
                 {
-                    section = sections[i];
+                    var section = sections[i];
                     if (node.Children.ContainsKey(section))
                     {
                         node = node.Children[section];
