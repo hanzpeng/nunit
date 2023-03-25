@@ -8,18 +8,19 @@ namespace NUnitTests
 {
     internal class P1166
     {
-        public class TrieNode
-        {
-            public Dictionary<string, TrieNode> Children;
-            public int value;
-            public TrieNode(int val)
-            {
-                Children = new Dictionary<string, TrieNode>();
-                this.value = val;
-            }
-        }
         public class FileSystem
         {
+            public class TrieNode
+            {
+                public Dictionary<string, TrieNode> Children;
+                public int value;
+                public TrieNode(int val)
+                {
+                    Children = new Dictionary<string, TrieNode>();
+                    this.value = val;
+                }
+            }
+
             TrieNode trie;
             public FileSystem()
             {
