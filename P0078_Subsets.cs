@@ -12,7 +12,7 @@ namespace P0078_Subsets
         public void Test1()
         {
             Assert.AreEqual(1, 1);
-            List<List<int>> result = Subsets(new int[] { 1, 2, 3, 4 });
+            List<List<int>> result = Subsets_dp(new int[] { 1, 2, 3, 4 });
 
             foreach (var li in result)
             {
@@ -44,32 +44,31 @@ namespace P0078_Subsets
              */
 
         }
-        public List<List<int>> Subsets(int[] nums)
+        public List<List<int>> Subsets_dp(int[] nums)
         {
-            List<List<int>> l = new List<List<int>>();
-            l.Add(new List<int>());
-            List<int> temp = null;
-            for (int x = 0; x < nums.Length; x++)
+            List<List<int>> dp = new List<List<int>>();
+            dp.Add(new List<int>());
+            for (int i = 0; i < nums.Length; i++)
             {
-                int s = l.Count;
-                for (int y = 0; y < s; y++)
+                int curCount = dp.Count;
+                for (int j = 0; j < curCount; j++)
                 {
-                    temp = new List<int>(l[y]);
-                    temp.Add(nums[x]);
-                    l.Add(new List<int>(temp));
+                    var newList = new List<int>(dp[j]);
+                    newList.Add(nums[i]);
+                    dp.Add(new List<int>(newList));
                 }
             }
-            return l;
+            return dp;
         }
 
-        public IList<IList<int>> Subsets_B(int[] nums)
+        public IList<IList<int>> Subsets_regression(int[] nums)
         {
             var res = new List<IList<int>>();
             if (nums?.Length == 0) return res;
-            dfs(nums, res, new Stack<int>(), 0);
+            regression(nums, res, new Stack<int>(), 0);
             return res;
         }
-        public void dfs(int[] nums, IList<IList<int>> res, Stack<int> cur, int index)
+        public void regression(int[] nums, IList<IList<int>> res, Stack<int> cur, int index)
         {
             if (index == nums.Length)
             {
@@ -77,10 +76,10 @@ namespace P0078_Subsets
                 return;
             }
 
-            dfs(nums, res, cur, index + 1);
+            regression(nums, res, cur, index + 1);
 
             cur.Push(nums[index]);
-            dfs(nums, res, cur, index + 1);
+            regression(nums, res, cur, index + 1);
             cur.Pop();
         }
 
