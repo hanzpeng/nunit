@@ -10,8 +10,7 @@ namespace NUnitTests
     {
         public int LengthOfLongestSubstring(string s)
         {
-            List<char> list = new List<char>();
-            var set = new HashSet<char>(list);
+            var set = new HashSet<char>();
             int l = 0;
             int r = 0;
             int maxLen = 0;
