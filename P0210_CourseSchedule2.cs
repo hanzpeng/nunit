@@ -8,6 +8,55 @@ namespace NUnitTests
 {
     class P0210_CourseSchedule2
     {
+        public class Solution
+        {
+            public int[] FindOrder(int numCourses, int[][] prerequisites)
+            {
+                var prereqDict = new Dictionary<int, HashSet<int>>();
+                for (int course = 0; course < numCourses; course++)
+                {
+                    prereqDict[course] = new HashSet<int>();
+                }
+                foreach (var prereq in prerequisites)
+                {
+                    prereqDict[prereq[0]].Add(prereq[1]);
+                }
+                var visited = new bool[numCourses];
+                var callStack = new HashSet<int>();
+                var result = new List<int>();
+                for (int course = 0; course < numCourses; course++)
+                {
+                    if (!visited[course])
+                    {
+                        bool ret = Dfs(course, prereqDict, visited, callStack, result);
+                        if (ret == false) return new int[] { };
+                    }
+                }
+                return result.ToArray();
+            }
+
+            public bool Dfs(int course, Dictionary<int, HashSet<int>> prereqDict, bool[] visited, HashSet<int> callStack, List<int> result)
+            {
+                if (callStack.Contains(course))
+                {
+                    return false;
+                }
+                callStack.Add(course);
+                foreach (var requiredCourse in prereqDict[course])
+                {
+                    if (!visited[requiredCourse])
+                    {
+                        var ret = Dfs(requiredCourse, prereqDict, visited, callStack, result);
+                        if (ret == false) return false;
+                    }
+                }
+                result.Add(course);
+                visited[course] = true;
+                callStack.Remove(course);
+                return true;
+            }
+        }
+
         // Use InDegree
         public int[] FindOrderInDegree_WithDependencyGraph(int numCourses, int[][] prerequisites)
         {
