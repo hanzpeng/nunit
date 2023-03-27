@@ -15,7 +15,8 @@ namespace NUnitTests
             {
                 if (nums[i] > 0 && nums[i] <= nums.Length)
                 {
-                    foundValue[nums[i]-1] = true;                }
+                    foundValue[nums[i]-1] = true;      
+                }
             }
 
             for (int i = 0; i < nums.Length; i++)
