@@ -8,15 +8,15 @@ namespace NUnitTests
 {
     internal class P0060_PermutationSequence
     {
-        string result = "";
         public string GetPermutation(int n, int k)
         {
             int count = 0;
             bool[] used = new bool[n + 1];
-            Backtrack(0, k, n, "", ref count, used);
+            string result = "";
+            Backtrack(0, k, n, "", ref count, used, ref result);
             return result;
         }
-        public bool Backtrack(int i, int k, int n, string str, ref int count, bool[] used)
+        public bool Backtrack(int i, int k, int n, string str, ref int count, bool[] used, ref string result)
         {
             if (i == n)
             {
@@ -37,8 +37,7 @@ namespace NUnitTests
                 if (!used[j])
                 {
                     used[j] = true;
-                    var res = Backtrack(i + 1, k, n, str + j, ref count, used);
-                    if (res == true)
+                    if (Backtrack(i + 1, k, n, str + j, ref count, used, ref result) == true)
                     {
                         return true;
                     }
