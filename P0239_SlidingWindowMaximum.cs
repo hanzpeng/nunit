@@ -50,5 +50,42 @@ namespace NUnitTests
 
             return ans;
         }
+        public class Solution
+        {
+            public class MaxHeapComparer : IComparer<int>
+            {
+                public int Compare(int x, int y)
+                {
+                    return y.CompareTo(x);
+                }
+            }
+            public int[] MaxSlidingWindow(int[] nums, int k)
+            {
+                var result = new List<int>();
+                var q = new PriorityQueue<(int, int), int>(new MaxHeapComparer());
+                for (int i = 0; i < k; i++)
+                {
+                    q.Enqueue((i, nums[i]), nums[i]);
+                }
+                var max = q.Peek();
+                result.Add(max.Item2);
+                var l = 0;
+                var r = k - 1;
+                while (r < nums.Length - 1)
+                {
+                    r++;
+                    l++;
+                    q.Enqueue((r, nums[r]), nums[r]);
+                    max = q.Peek();
+                    while (max.Item1 < l)
+                    {
+                        q.Dequeue();
+                        max = q.Peek();
+                    }
+                    result.Add(max.Item2);
+                }
+                return result.ToArray();
+            }
+        }
     }
 }
