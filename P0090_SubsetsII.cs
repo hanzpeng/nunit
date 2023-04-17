@@ -84,4 +84,35 @@ namespace P0090_SubsetsII
             Dfs(numCount, keys, cur, res, index + 1);
         }
     }
+
+    public class SolutionC
+    {
+        public IList<IList<int>> SubsetsWithDup(int[] nums)
+        {
+            var dp = new List<IList<int>>();
+            var freq = new Dictionary<int, int>();
+            foreach (var num in nums)
+            {
+                freq[num] = freq.GetValueOrDefault(num, 0) + 1;
+            }
+            dp.Add(new List<int>());
+            foreach (var num in freq.Keys)
+            {
+                var count = dp.Count;
+                for (int j = 0; j < count; j++)
+                {
+                    for (int len = 1; len <= freq[num]; len++)
+                    {
+                        var list = new List<int>(dp[j]);
+                        for (int k = 1; k <= len; k++)
+                        {
+                            list.Add(num);
+                        }
+                        dp.Add(list);
+                    }
+                }
+            }
+            return dp;
+        }
+    }
 }
