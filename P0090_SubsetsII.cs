@@ -85,26 +85,26 @@ namespace P0090_SubsetsII
         }
     }
 
-    public class SolutionC
+    public class Solution_DP_Iter
     {
         public IList<IList<int>> SubsetsWithDup(int[] nums)
         {
             var dp = new List<IList<int>>();
-            var freq = new Dictionary<int, int>();
+            var frequency = new Dictionary<int, int>();
             foreach (var num in nums)
             {
-                freq[num] = freq.GetValueOrDefault(num, 0) + 1;
+                frequency[num] = frequency.GetValueOrDefault(num, 0) + 1;
             }
             dp.Add(new List<int>());
-            foreach (var num in freq.Keys)
+            foreach (var num in frequency.Keys)
             {
-                var count = dp.Count;
-                for (int j = 0; j < count; j++)
+                var dpCount = dp.Count;
+                for (int j = 0; j < dpCount; j++)
                 {
-                    for (int len = 1; len <= freq[num]; len++)
+                    for (int freq = 1; freq <= frequency[num]; freq++)
                     {
                         var list = new List<int>(dp[j]);
-                        for (int k = 1; k <= len; k++)
+                        for (int k = 1; k <= freq; k++)
                         {
                             list.Add(num);
                         }
