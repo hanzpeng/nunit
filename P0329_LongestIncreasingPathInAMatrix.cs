@@ -44,5 +44,45 @@ namespace NUnitTests
             Depth[r][c] = maxChildDepth + 1;
             return Depth[r][c];
         }
+
+        public class Solution2
+        {
+            public int LongestIncreasingPath(int[][] matrix)
+            {
+                var maxDepth = 0;
+                int[][] depth = new int[matrix.Length][];
+                for (int r = 0; r < matrix.Length; r++)
+                {
+                    depth[r] = new int[matrix[0].Length];
+                }
+
+                for (int r = 0; r < matrix.Length; r++)
+                {
+                    for (int c = 0; c < matrix[0].Length; c++)
+                    {
+                        maxDepth = Math.Max(Dfs(r, c, matrix, depth), maxDepth);
+                    }
+                }
+                return maxDepth;
+            }
+
+            public int Dfs(int r, int c, int[][] matrix, int[][] depth)
+            {
+                if (depth[r][c] > 0) return depth[r][c];
+                var dir = new int[4][] { new int[2] { -1, 0 }, new int[2] { 1, 0 }, new int[2] { 0, -1 }, new int[2] { 0, 1 } };
+                var maxDepth = 1;
+                foreach (var d in dir)
+                {
+                    var r1 = r + d[0];
+                    var c1 = c + d[1];
+                    if (r1 >= 0 && r1 < matrix.Length && c1 >= 0 && c1 < matrix[0].Length && matrix[r1][c1] > matrix[r][c])
+                    {
+                        maxDepth = Math.Max(Dfs(r1, c1, matrix, depth) + 1, maxDepth);
+                    }
+                }
+                depth[r][c] = maxDepth;
+                return maxDepth;
+            }
+        }
     }
 }
