@@ -12,9 +12,6 @@ namespace ConsoleApp
             Console.WriteLine( String.Join(",", result));
             if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
-
-
-
             // Greatest Common Divisor
             //dividing larger number by the smaller number
             //replacing the larger number with the remainder
