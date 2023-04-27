@@ -8,6 +8,13 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            (string, int)[] pare = { ("one", 1), ("two", 2) };
+            foreach(var pa in pare)
+            {
+                Console.WriteLine(pa.Item1 + " " + pa.Item2);
+                if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
+            }
+
             var result = new List<string>(new string[]{"a","b","c" });
             Console.WriteLine( String.Join(",", result));
             if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
