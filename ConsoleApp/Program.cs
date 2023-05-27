@@ -6,17 +6,22 @@ namespace ConsoleApp
 {
     internal class Program
     {
+        static String location;
+        static DateTime time;
         static void Main(string[] args)
         {
+            Console.WriteLine(location == null ? "location is null" : location);
+            Console.WriteLine(time == null ? "time is null" : time.ToString());
+
             (string, int)[] pare = { ("one", 1), ("two", 2) };
-            foreach(var pa in pare)
+            foreach (var pa in pare)
             {
                 Console.WriteLine(pa.Item1 + " " + pa.Item2);
                 if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
             }
 
-            var result = new List<string>(new string[]{"a","b","c" });
-            Console.WriteLine( String.Join(",", result));
+            var result = new List<string>(new string[] { "a", "b", "c" });
+            Console.WriteLine(String.Join(",", result));
             if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             // Greatest Common Divisor
@@ -29,9 +34,10 @@ namespace ConsoleApp
 
 
             //list
-            var mylist = new List<string>(new string[] {"sherry","soap"});
+            var mylist = new List<string>(new string[] { "sherry", "soap" });
             mylist.Insert(1, "peng");
-            foreach(var s in mylist) { Console.Write(s + ","); } Console.WriteLine();
+            foreach (var s in mylist) { Console.Write(s + ","); }
+            Console.WriteLine();
             mylist.RemoveAt(1);
             mylist.Add("sherry");
             mylist.Remove("sherry");
