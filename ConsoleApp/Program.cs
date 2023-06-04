@@ -6,6 +6,30 @@ namespace ConsoleApp
 {
     internal class Program
     {
+        struct WBD // Workers, Bikes, Distance
+        {
+            public WBD(int w, int b, int d)
+            {
+                this.w = w;
+                this.b = b;
+                this.d = d;
+            }
+            public int w;
+            public int b;
+            public int d;
+        }
+        PriorityQueue<WBD, WBD> pq = new PriorityQueue<WBD, WBD>(
+                    Comparer<WBD>.Create(
+                            (x, y) =>
+                            {
+                                if (x.d != y.d) return x.d - y.d;
+                                if (x.w != y.w) return x.w - y.w;
+                                return x.b - y.b;
+                            }
+                         )
+        
+            );
+
         static String location;
         static DateTime time;
         static void Main(string[] args)
