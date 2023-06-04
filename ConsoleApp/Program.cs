@@ -5,37 +5,37 @@ using System.Collections.Generic;
 namespace ConsoleApp
 {
     internal class Program
-    {
-        struct WBD // Workers, Bikes, Distance
-        {
-            public WBD(int w, int b, int d)
-            {
-                this.w = w;
-                this.b = b;
-                this.d = d;
-            }
-            public int w;
-            public int b;
-            public int d;
-        }
-        PriorityQueue<WBD, WBD> pq = new PriorityQueue<WBD, WBD>(
-                    Comparer<WBD>.Create(
-                            (x, y) =>
-                            {
-                                if (x.d != y.d) return x.d - y.d;
-                                if (x.w != y.w) return x.w - y.w;
-                                return x.b - y.b;
-                            }
-                         )
-        
-            );
-
-        static String location;
-        static DateTime time;
+    {   
         static void Main(string[] args)
         {
-            Console.WriteLine(location == null ? "location is null" : location);
-            Console.WriteLine(time == null ? "time is null" : time.ToString());
+
+            //////////////////////////////////////////
+            /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
+
+            var intList = new List<int>(new int[] { 1, 2, 2, 3 });
+            var strList = new List<string>(new string[] { "a", "a", "b" });
+            var pq = new PriorityQueue<(int I, string S), (int I, string S)>(
+                Comparer<(int I, string S)>.Create((x, y) =>
+                {
+                    if (x.I != y.I) { return x.I - y.I; }
+                    return x.S.CompareTo(y.S);
+                }));
+
+            foreach (var intVal in intList)
+            {
+                foreach (var strVal in strList)
+                {
+                    pq.Enqueue((intVal, strVal), (intVal, strVal));
+                }
+            }
+
+            while (pq.Count > 0)
+            {
+                var item = pq.Dequeue();
+                Console.WriteLine(item.I + item.S);
+            }
+
+            //////////////////////////////////////////
 
             (string, int)[] pare = { ("one", 1), ("two", 2) };
             foreach (var pa in pare)
