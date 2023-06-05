@@ -10,7 +10,7 @@ namespace NUnitTests
     {
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode[] nodes)
         {
-            var values = nodes.Select(n => n.val).ToList().ToHashSet();
+            var values = nodes.Select(n => n.val).ToHashSet();
             return TopNOde(root, values);
         }
 
