@@ -1,26 +1,49 @@
-﻿using System.Collections;
+﻿
+//1145. Binary Tree Coloring Game
+
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 
-var intList = new List<int>(new int[] { 1, 2, 2, 3 });
-var strList = new List<string>(new string[] { "a", "a", "b" });
-var pq = new PriorityQueue<(int I, string S), (int I, string S)>(
-    Comparer<(int I, string S)>.Create((x, y) =>
-    {
-        if (x.I != y.I) { return x.I - y.I; }
-        return x.S.CompareTo(y.S);
-    }));
-
-foreach (var intVal in intList)
+public class Solution
 {
-    foreach (var strVal in strList)
+    public bool BtreeGameWinningMove(TreeNode root, int n, int x)
     {
-        pq.Enqueue((intVal, strVal), (intVal, strVal));
+        if (root == null) return false;
+        return BtreeGameWinningMove(root, n, x, root);
+    }
+
+    public bool BtreeGameWinningMove(TreeNode cur, int n, int x, TreeNode p)
+    {
+        if (cur == null) return false;
+        if (cur.val == x)
+        {
+            if (Count(cur.left) > n / 2) return true;
+            if (Count(cur.right) > n / 2) return true;
+            if (p != null && Count(cur) <= n/2) return true;
+            return false;
+        }
+        return BtreeGameWinningMove(cur.left, n, x, cur) || BtreeGameWinningMove(cur.left, n, x, cur);
+    }
+
+    public int Count(TreeNode cur)
+    {
+        if (cur == null) return 0;
+        return 1 + Count(cur.left) + Count(cur.right);
+    }
+
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int val = 0, TreeNode? left = null, TreeNode? right = null)
+        {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
 
-while (pq.Count > 0)
-{
-    var item = pq.Dequeue();
-    Console.WriteLine(item.I + item.S);
-}
+
 
