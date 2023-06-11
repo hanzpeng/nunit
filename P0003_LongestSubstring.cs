@@ -10,18 +10,17 @@ namespace NUnitTests
     {
         public int LengthOfLongestSubstring(string s)
         {
-            var map = new HashSet<char>();
+            var map = new Dictionary<char, int>();
             int l = 0;
             int r = 0;
             int maxLen = 0;
             while (r < s.Length)
             {
-                while (map.Contains(s[r]))
+                if (map.ContainsKey(s[r]))
                 {
-                    map.Remove(s[l]);
-                    l++;
+                    l = Math.Max(l, map[s[r]]+1);
                 }
-                map.Add(s[r]);
+                map[s[r]] = r;
                 maxLen = Math.Max(r - l + 1, maxLen);
                 r++;
             }
