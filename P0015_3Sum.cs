@@ -8,40 +8,79 @@ namespace NUnitTests
 {
     internal class P0015_3Sum
     {
-        public IList<IList<int>> ThreeSum(int[] nums)
+        public class Solution
         {
-            Array.Sort(nums);
-            var res = new HashSet<(int, int, int)>();
-            for (int i = 0; i < nums.Length; i++)
+            public IList<IList<int>> ThreeSum(int[] nums)
             {
-                var twoRes = TwoSum(nums, -nums[i], i + 1);
-                if (twoRes?.Count > 0)
+                Array.Sort(nums);
+                var res = new HashSet<(int, int, int)>();
+                for (int i = 0; i < nums.Length; i++)
                 {
-                    foreach (var item in twoRes)
+                    var twoRes = TwoSum(nums, -nums[i], i + 1);
+                    if (twoRes?.Count > 0)
                     {
-                        res.Add(item);
+                        foreach (var item in twoRes)
+                        {
+                            res.Add(item);
+                        }
                     }
                 }
+                return res.Select(x => (IList<int>)(new List<int>(new int[] { x.Item1, x.Item2, x.Item3 }))).ToList();
             }
-            return res.Select(x => (IList<int>)(new List<int>(new int[] { x.Item1, x.Item2, x.Item3 }))).ToList();
+
+            public HashSet<(int, int, int)> TwoSum(int[] nums, int target, int iNext)
+            {
+                var res = new HashSet<(int, int, int)>();
+                var set = new HashSet<int>();
+                if (iNext > nums.Length - 2) return res;
+                for (int i = iNext; i < nums.Length; i++)
+                {
+                    if (set.Contains(target - nums[i]))
+                    {
+                        var arr = new int[] { -target, target - nums[i], nums[i] };
+                        Array.Sort(arr);
+                        res.Add((arr[0], arr[1], arr[2]));
+                    }
+                    set.Add(nums[i]);
+                }
+                return res;
+            }
         }
 
-        public HashSet<(int, int, int)> TwoSum(int[] nums, int target, int iNext)
+        public class Solution2
         {
-            var res = new HashSet<(int, int, int)>();
-            var set = new HashSet<int>();
-            if (iNext > nums.Length - 2) return res;
-            for (int i = iNext; i < nums.Length; i++)
+            public IList<IList<int>> ThreeSum(int[] nums)
             {
-                if (set.Contains(target - nums[i]))
+                Array.Sort(nums);
+                var res = new List<IList<int>>();
+                for (int i = 0; i < nums.Length && nums[i] <= 0; i++)
                 {
-                    var arr = new int[] { -target, target - nums[i], nums[i] };
-                    Array.Sort(arr);
-                    res.Add((arr[0], arr[1], arr[2]));
+                    if (i == 0 || nums[i - 1] != nums[i])
+                    {
+                        TwoSum(nums, i, res);
+                    }
                 }
-                set.Add(nums[i]);
+                return res;
             }
-            return res;
+
+            public void TwoSum(int[] nums, int cur, List<IList<int>> res)
+            {
+                if (cur > nums.Length - 3) return;
+                var seen = new HashSet<int>();
+                for (int i = cur + 1; i < nums.Length; i++)
+                {
+                    if (seen.Contains(-nums[cur] - nums[i]))
+                    {
+                        var arr = new int[] { nums[cur], -nums[cur] - nums[i], nums[i] };
+                        res.Add(new List<int>(arr));
+                        while (i + 1 < nums.Length && nums[i] == nums[i + 1])
+                        {
+                            ++i;
+                        }
+                    }
+                    seen.Add(nums[i]);
+                }
+            }
         }
     }
 }
