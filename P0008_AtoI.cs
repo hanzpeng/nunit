@@ -41,7 +41,7 @@ namespace NUnitTests
                     int digit = s[index] - '0';
 
                     // Check overflow and underflow conditions. 
-                    if ((result > int.MaxValue/ 10) ||
+                    if ((result > int.MaxValue / 10) ||
                         (result == int.MaxValue / 10 && digit > int.MaxValue % 10))
                     {
                         // If integer overflowed return 2^31-1, otherwise if underflowed return -2^31.    
