@@ -11,6 +11,9 @@ namespace ConsoleApp
 
             //////////////////////////////////////////
             /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
+            /// 
+
+            Console.WriteLine(3.1415926.ToString("000.00000"));
 
             var intList = new List<int>(new int[] { 1, 2, 2, 3 });
             var strList = new List<string>(new string[] { "a", "a", "b" });
