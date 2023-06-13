@@ -13,6 +13,21 @@ namespace ConsoleApp
             /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
             /// 
 
+            var intlist = new List<int>(new int[] { 1, 2, 3, 4, 5, 6 });
+            var avg = intlist.Average();
+            var min = intlist.Min();
+            var max = intlist.Max();
+            var sum= intlist.Select(x=>(long)x).Sum();
+            Console.WriteLine(min.ToString());
+            Console.WriteLine(avg.ToString());
+            Console.WriteLine(max.ToString());
+            Console.WriteLine(sum.ToString());
+            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
+
+            var x11 = intlist.Where(x => x % 2 == 0).Select(x => x * 10).Average();
+            Console.WriteLine(x11.ToString());
+
+
             Console.WriteLine(3.1415926.ToString("000.00000"));
 
             var intList = new List<int>(new int[] { 1, 2, 2, 3 });
@@ -49,7 +64,6 @@ namespace ConsoleApp
 
             var result = new List<string>(new string[] { "a", "b", "c" });
             Console.WriteLine(String.Join(",", result));
-            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             // Greatest Common Divisor
             //dividing larger number by the smaller number
