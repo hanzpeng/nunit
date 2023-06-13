@@ -10,9 +10,24 @@ namespace ConsoleApp
         {
 
             //////////////////////////////////////////
-            /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
-            /// 
+            /// sort with customer Comparer
 
+
+            var sortTuple = new List<(int, int)>(new (int, int)[] {(3,3), (1,1),(1,2),(2,1), (2,2) });
+            //sortTuple.Sort();
+            //sortTuple.ForEach(t => Console.WriteLine(t));
+
+            sortTuple.Sort((t1,t2)=> t1.Item1 == t2.Item1 ? t2.Item2 - t1.Item2 : t2.Item1 - t1.Item1 );
+            sortTuple.ForEach(t => Console.WriteLine(t));
+
+
+            var sortlist = new List<int>(new int[] { 1, 2, 3, 4, 5, 6 });
+            sortlist.Sort((x1, x2) => x2 - x1);
+            sortlist.ForEach(x => Console.WriteLine(x));
+
+            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
+            //////////////////////////////////////////
+            ///list operation
             var intlist = new List<int>(new int[] { 1, 2, 3, 4, 5, 6 });
             var avg = intlist.Average();
             var min = intlist.Min();
@@ -22,13 +37,19 @@ namespace ConsoleApp
             Console.WriteLine(avg.ToString());
             Console.WriteLine(max.ToString());
             Console.WriteLine(sum.ToString());
-            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             var x11 = intlist.Where(x => x % 2 == 0).Select(x => x * 10).Average();
             Console.WriteLine(x11.ToString());
 
-
+            //////////////////////////////////////////
+            // numeric number format
+            Console.WriteLine(0.12345.ToString("0.00"));
             Console.WriteLine(3.1415926.ToString("000.00000"));
+
+            //////////////////////////////////////////
+            // ParorityQueue Comparer
+            /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
+            /// 
 
             var intList = new List<int>(new int[] { 1, 2, 2, 3 });
             var strList = new List<string>(new string[] { "a", "a", "b" });
