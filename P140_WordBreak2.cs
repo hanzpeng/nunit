@@ -25,17 +25,16 @@ namespace NUnitTests
                     if (wordDict.Contains(s.Substring(0, i)) )
                     {
                         var first = s.Substring(0, i);
-                        var rest = WordBreak(s.Substring(i), wordDict);
-                        if(remain.Count > 0)
+                        var restList = WordBreak(s.Substring(i), wordDict);
+                        for(int j = 0; j< restList.Count; j++)
                         {
-                            res.Add(first + " " + rest)
+                            restList[j] = first + " " + restList[j];
                         }
+                        res.AddRange(restList);
                     }
                 }
                 return res;
             }
-
-            public IList<string> WordBreak(string s, IList<string> wordDict)
         }
     }
 }
