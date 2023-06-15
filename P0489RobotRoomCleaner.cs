@@ -66,4 +66,53 @@ namespace NUnitTests
             robot.Move();
         }
     }
+
+    class P0489RobotRoomCleaner_2
+    {
+        public HashSet<(int, int)> visited;
+
+        public (int, int)[] dirs = {
+        (-1, 0),
+        ( 0, 1),
+        ( 1, 0),
+        ( 0,-1)
+    };
+
+        public Robot rb = null;
+
+        public void CleanRoom(Robot robot)
+        {
+            this.rb = robot;
+            this.visited = new HashSet<(int, int)>();
+            CleanRoom(0, 0, 0);
+        }
+        public void CleanRoom(int r, int c, int dir)
+        {
+            rb.Clean();
+            visited.Add((r, c));
+            for (int i = 0; i < 4; i++)
+            {
+                var d1 = (dir + i) % 4;
+                var r1 = r + dirs[d1].Item1;
+                var c1 = c + dirs[d1].Item2;
+                if (!visited.Contains((r1, c1)))
+                {
+                    if (!rb.Move())
+                    {
+                        visited.Add((r1, c1));
+                    }
+                    else
+                    {
+                        CleanRoom(r1, c1, d1);
+                        rb.TurnRight();
+                        rb.TurnRight();
+                        rb.Move();
+                        rb.TurnRight();
+                        rb.TurnRight();
+                    }
+                }
+                rb.TurnRight();
+            }
+        }
+    }
 }
