@@ -35,6 +35,21 @@ namespace NUnitTests
             return pre;
         }
 
+        public ListNode ReverseList2(ListNode head)
+        {
+            if (head == null || head.next == null) return head;
+            ListNode tail = null;
+            var n1 = head;
+            while (n1 != null)
+            {
+                var n2 = n1.next;
+                n1.next = tail;
+                tail = n1;
+                n1 = n2;
+            }
+            return tail;
+        }
+
         public class ListNode
         {
             public int val;
