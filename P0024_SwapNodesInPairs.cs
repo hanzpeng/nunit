@@ -8,7 +8,30 @@ namespace NUnitTests
 {
     internal class P0024_SwapNodesInPairs
     {
-        public class Solution
+        public class Solution1
+        {
+            public ListNode SwapPairs(ListNode head)
+            {
+                if (head == null || head.next == null) return head;
+                var dummy = new ListNode();
+                var tail = dummy;
+                var n1 = head;
+                while (n1 != null && n1?.next != null)
+                {
+                    var n2 = n1.next;
+                    var n3 = n2?.next;
+                    tail.next = n2;
+                    n2.next = n1;
+                    n1.next = n3;
+                    tail = n1;
+                    n1 = n3;
+                }
+
+                return dummy.next;
+            }
+        }
+
+        public class Solution2
         {
             public ListNode SwapPairs(ListNode head)
             {
@@ -42,11 +65,12 @@ namespace NUnitTests
                 }
                 return root;
             }
-            public class ListNode
-            {
-                public int val;
-                public ListNode next;
-            }
         }
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+        }
+
     }
 }
