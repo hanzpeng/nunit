@@ -14,8 +14,9 @@ namespace ConsoleApp
 
 
             var sortTuple = new List<(int, int)>(new (int, int)[] {(3,3), (1,1),(1,2),(2,1), (2,2) });
-            //sortTuple.Sort();
-            //sortTuple.ForEach(t => Console.WriteLine(t));
+            sortTuple.Sort();
+            sortTuple.ForEach(t => Console.WriteLine(t));
+            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             sortTuple.Sort((t1,t2)=> t1.Item1 == t2.Item1 ? t2.Item2 - t1.Item2 : t2.Item1 - t1.Item1 );
             sortTuple.ForEach(t => Console.WriteLine(t));
@@ -87,11 +88,14 @@ namespace ConsoleApp
             Console.WriteLine(String.Join(",", result));
 
             // Greatest Common Divisor
+            // Euclid's algorithm
             //dividing larger number by the smaller number
-            //replacing the larger number with the remainder
+            //replacing the larger number with the smaller
+            //replacing the smaller number with the remainder
             //until the remainder is zero.
             //The last non-zero remainder is the GCD
-            int gcd(int a, int b) => b == 0 ? a : gcd(b, a % b);
+            //int gcd(int a, int b) => b == 0 ? a : gcd(b, a % b);
+            int gcd(int larger, int smaller) => smaller == 0 ? larger : gcd(smaller, larger % smaller);
             Console.WriteLine(gcd(12, 16));
 
 
