@@ -10,13 +10,24 @@ namespace ConsoleApp
         {
 
             //////////////////////////////////////////
+            /// convert int[][] to List<List<int>>
+            var arrayOfArray = new int[][] { new int[] { 11, 12 }, new int[] { 21, 22 } };
+            //new int[][] arrayOfArray = { new int[] { 11, 12 }, new int[] { 21, 22 } };
+            List<List<int>> listOfList = arrayOfArray.ToList().Select(x => new List<int>(x)).ToList();
+            listOfList.ForEach(li => Console.Write($"({li[0]}, {li[1]}), "));
+            Console.WriteLine();
+
+            /// convert List<List<int>> to int[][]
+            int[][] arrayOfArray1 = listOfList.Select(li => li.ToArray()).ToArray();
+
+
+            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
+
+            //////////////////////////////////////////
             /// sort with customer Comparer
-
-
             var sortTuple = new List<(int, int)>(new (int, int)[] {(3,3), (1,1),(1,2),(2,1), (2,2) });
             sortTuple.Sort();
             sortTuple.ForEach(t => Console.WriteLine(t));
-            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             sortTuple.Sort((t1,t2)=> t1.Item1 == t2.Item1 ? t2.Item2 - t1.Item2 : t2.Item1 - t1.Item1 );
             sortTuple.ForEach(t => Console.WriteLine(t));
