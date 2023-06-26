@@ -12,6 +12,11 @@ namespace ConsoleApp
             //////////////////////////////////////////
             /// convert int[][] to List<List<int>>
             var arrayOfArray = new int[][] { new int[] { 11, 12 }, new int[] { 21, 22 } };
+            
+            var listlist = arrayOfArray.ToList().Select(x => x.ToList()).ToList();
+            var arrayarray = listlist.Select(x => x.ToArray()).ToArray();
+
+
             //new int[][] arrayOfArray = { new int[] { 11, 12 }, new int[] { 21, 22 } };
             List<List<int>> listOfList = arrayOfArray.ToList().Select(x => new List<int>(x)).ToList();
             listOfList.ForEach(li => Console.Write($"({li[0]}, {li[1]}), "));
