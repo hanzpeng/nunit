@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace ConsoleApp
 {
@@ -8,6 +10,34 @@ namespace ConsoleApp
     {   
         static void Main(string[] args)
         {
+
+            //string phonePatten10Or7 = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
+            string pattern10 = @"^\s*(\(([0-9]{3}\))|([0-9]{3}[\s]*[-.]?))(\s*[0-9]{3}\s*)[-.]?(\s*[0-9]{4}\s*)$";
+            string pattern7 = @"^(\s*[0-9]{3}\s*)[-.]?(\s*[0-9]{4}\s*)$";
+            string pattern3 = @"^\s*[0-9]{3}\s*$";
+
+            var phones = new string[]{
+                "1234567890","  123 456 7890  ",
+                "123-456-7890","123 - 456  - 7890", "123 - 4567890",// you may add white space before/after -
+                "123.456.7890", "123 . 456 . 7890", // you may add white space before/after . 
+                "123.456-7890", 
+                "123-456.7890",
+                "(123)456-7890",
+                "(123)456.7890",
+                "4567890",
+                "456-7890 ","456 -  7890 ",
+                "456.7890", "456 .  7890",
+                "123",
+                "123 ",
+                " 123 ",
+            };
+            foreach(var phone in phones)
+            {
+                var phone1 = Regex.Replace(phone, @"\s+", "");
+                Console.WriteLine(phone + " " + Regex.IsMatch(phone, pattern3));
+            }
+
+            if (Math.Ceiling((new Random()).NextDouble()) > -1) return;
 
             //////////////////////////////////////////
             /// convert int[][] to List<List<int>>
