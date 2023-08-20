@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ConsoleApp
 {
     internal class Program
-    {   
+    {
         static void Main(string[] args)
         {
 
@@ -20,7 +20,7 @@ namespace ConsoleApp
                 "1234567890","  123 456 7890  ",
                 "123-456-7890","123 - 456  - 7890", "123 - 4567890",// you may add white space before/after -
                 "123.456.7890", "123 . 456 . 7890", // you may add white space before/after . 
-                "123.456-7890", 
+                "123.456-7890",
                 "123-456.7890",
                 "(123)456-7890",
                 "(123)456.7890",
@@ -31,7 +31,7 @@ namespace ConsoleApp
                 "123 ",
                 " 123 ",
             };
-            foreach(var phone in phones)
+            foreach (var phone in phones)
             {
                 var phone1 = Regex.Replace(phone, @"\s+", "");
                 Console.WriteLine(phone + " " + Regex.IsMatch(phone, pattern3));
@@ -42,8 +42,8 @@ namespace ConsoleApp
             //////////////////////////////////////////
             /// convert int[][] to List<List<int>>
             var arrayOfArray = new int[][] { new int[] { 11, 12 }, new int[] { 21, 22 } };
-            
-            var listlist = arrayOfArray.ToList().Select(x => x.ToList()).ToList();
+
+            var listlist = arrayOfArray.Select(x => x.ToList()).ToList();
             var arrayarray = listlist.Select(x => x.ToArray()).ToArray();
 
 
@@ -60,11 +60,11 @@ namespace ConsoleApp
 
             //////////////////////////////////////////
             /// sort with customer Comparer
-            var sortTuple = new List<(int, int)>(new (int, int)[] {(3,3), (1,1),(1,2),(2,1), (2,2) });
+            var sortTuple = new List<(int, int)>(new (int, int)[] { (3, 3), (1, 1), (1, 2), (2, 1), (2, 2) });
             sortTuple.Sort();
             sortTuple.ForEach(t => Console.WriteLine(t));
 
-            sortTuple.Sort((t1,t2)=> t1.Item1 == t2.Item1 ? t2.Item2 - t1.Item2 : t2.Item1 - t1.Item1 );
+            sortTuple.Sort((t1, t2) => t1.Item1 == t2.Item1 ? t2.Item2 - t1.Item2 : t2.Item1 - t1.Item1);
             sortTuple.ForEach(t => Console.WriteLine(t));
 
 
@@ -79,7 +79,7 @@ namespace ConsoleApp
             var avg = intlist.Average();
             var min = intlist.Min();
             var max = intlist.Max();
-            var sum= intlist.Select(x=>(long)x).Sum();
+            var sum = intlist.Select(x => (long)x).Sum();
             Console.WriteLine(min.ToString());
             Console.WriteLine(avg.ToString());
             Console.WriteLine(max.ToString());
@@ -100,12 +100,21 @@ namespace ConsoleApp
 
             var intList = new List<int>(new int[] { 1, 2, 2, 3 });
             var strList = new List<string>(new string[] { "a", "a", "b" });
-            var pq = new PriorityQueue<(int I, string S), (int I, string S)>(
-                Comparer<(int I, string S)>.Create((x, y) =>
+
+            var tupleComparer = Comparer<(int, string)>.Create(
+                (x, y) =>
                 {
-                    if (x.I != y.I) { return x.I - y.I; }
-                    return x.S.CompareTo(y.S);
-                }));
+                    if (x.Item1 != y.Item1)
+                    {
+                        return x.Item1 - y.Item1;
+                    }
+                    else
+                    {
+                        return x.Item2.CompareTo(y.Item2);
+                    }
+                });
+
+            var pq = new PriorityQueue<(int, string), (int, string)>(tupleComparer);
 
             foreach (var intVal in intList)
             {

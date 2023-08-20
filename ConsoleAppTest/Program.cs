@@ -1,4 +1,9 @@
-﻿Console.WriteLine("hanz");
-var x = new int[] { 1, 2, 3, 4, 5 };
-var max = x.Max();
-Console.WriteLine(max);
+﻿
+var strComparer = Comparer<StringMap>.Create((m1, m2) => m1.S1.CompareTo(m2.S1));
+var pq = new PriorityQueue<StringMap, StringMap>(strComparer);
+
+struct StringMap
+{
+    public string S1;
+    public string S2;
+}
