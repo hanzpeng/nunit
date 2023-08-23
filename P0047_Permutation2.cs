@@ -8,6 +8,39 @@ namespace NUnitTests
 {
     internal class P0047_Permutation2_A
     {
+
+        public class Solution0
+        {
+            public IList<IList<int>> PermuteUnique(int[] nums)
+            {
+                var res = new List<IList<int>>();
+                PutEveryRemainingNumberInCurIndex(nums, 0, res);
+                return res;
+            }
+            public void PutEveryRemainingNumberInCurIndex(int[] nums, int curIndex, List<IList<int>> res)
+            {
+                if (curIndex == nums.Length)
+                {
+                    res.Add(new List<int>(nums));
+                    return;
+                }
+                var valueUsedInCurIndex = new HashSet<int>();
+                for (int j = curIndex; j < nums.Length; j++)
+                {
+                    if (valueUsedInCurIndex.Contains(nums[j])) continue;
+                    valueUsedInCurIndex.Add(nums[j]);
+
+                    // put every remaining number in current index, including the current index it self
+                    (nums[curIndex], nums[j]) = (nums[j], nums[curIndex]);
+                    // for each current index, proceed to next the index 
+                    var nextIndex = curIndex + 1;
+                    PutEveryRemainingNumberInCurIndex(nums, nextIndex, res);
+                    //back track so we can try next one
+                    (nums[curIndex], nums[j]) = (nums[j], nums[curIndex]);
+                }
+            }
+        }
+
         public class Solution1
         {
             public IList<IList<int>> PermuteUnique(int[] nums)
