@@ -12,7 +12,6 @@ namespace NUnitTests
         {
             public IList<IList<int>> PermuteUnique(int[] nums)
             {
-                Array.Sort(nums);
                 IList<IList<int>> result = new List<IList<int>>();
                 Dfs(nums, new Stack<int>(), new bool[nums.Length], result);
                 return result;
