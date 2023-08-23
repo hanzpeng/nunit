@@ -9,6 +9,33 @@ namespace NUnitTests
 {
     internal class P0046
     {
+        public class Solution0
+        {
+            public IList<IList<int>> Permute(int[] nums)
+            {
+                var res = new List<IList<int>>();
+                PutEveryRemainingNumberInCurIndex(nums, 0, res);
+                return res;
+            }
+            public void PutEveryRemainingNumberInCurIndex(int[] nums, int curIndex, List<IList<int>> res)
+            {
+                if (curIndex == nums.Length)
+                {
+                    res.Add(new List<int>(nums));
+                    return;
+                }
+                for (int j = curIndex; j < nums.Length; j++)
+                {
+                    // put every remaining number in current index, including the current index it self
+                    (nums[curIndex], nums[j]) = (nums[j], nums[curIndex]);
+                    // for each current index, proceed to next the index 
+                    var nextIndex = curIndex + 1;
+                    PutEveryRemainingNumberInCurIndex(nums, nextIndex, res);
+                    //back track so we can try next one
+                    (nums[curIndex], nums[j]) = (nums[j], nums[curIndex]);
+                }
+            }
+        }
         public class Solution
         {
             public IList<IList<int>> Permute(int[] nums)

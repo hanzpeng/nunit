@@ -10,6 +10,9 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            //swap two integer
+            var nums = new int[10];
+            (nums[1], nums[2]) = (nums[2], nums[1]);
 
             //string phonePatten10Or7 = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
             string pattern10 = @"^\s*(\(([0-9]{3}\))|([0-9]{3}[\s]*[-.]?))(\s*[0-9]{3}\s*)[-.]?(\s*[0-9]{4}\s*)$";
