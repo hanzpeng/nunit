@@ -94,6 +94,32 @@ namespace NUnitTests
                 }
             }
         }
+
+        public class Solution3
+        {
+            public IList<IList<int>> Permute(int[] nums)
+            {
+                var res = new List<IList<int>>();
+                backtrack(nums, res, new List<int>());
+                return res;
+            }
+            public void backtrack(int[] nums, List<IList<int>> res, List<int> cur)
+            {
+                if (cur.Count == nums.Length)
+                {
+                    res.Add(new List<int>(cur));
+                    return;
+                }
+
+                foreach (var num in nums)
+                {
+                    if (cur.Contains(num)) continue;
+                    cur.Add(num);
+                    backtrack(nums, res, cur);
+                    cur.RemoveAt(cur.Count - 1);
+                }
+            }
+        }
     }
 
 
