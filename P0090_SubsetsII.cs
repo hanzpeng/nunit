@@ -85,7 +85,7 @@ namespace P0090_SubsetsII
         }
     }
 
-    public class Solution_DP_Iter
+    public class Solution_DP_Iter_A
     {
         public IList<IList<int>> SubsetsWithDup(int[] nums)
         {
@@ -115,7 +115,7 @@ namespace P0090_SubsetsII
             return dp;
         }
     }
-    public class Solution
+    public class Solution_DP_Iter_B
     {
         public IList<IList<int>> SubsetsWithDup(int[] nums)
         {
@@ -144,4 +144,33 @@ namespace P0090_SubsetsII
         }
     }
 
+    public class Solution_DP_Iter_C
+    {
+        public IList<IList<int>> SubsetsWithDup(int[] nums)
+        {
+            Array.Sort(nums);
+            var dp = new List<IList<int>>();
+            dp.Add(new List<int>());
+            var count = dp.Count;
+            var preCount = 0;
+            for (int j = 0; j < nums.Length; j++)
+            {
+                preCount = count;
+                count = dp.Count;
+                var start = 0;
+                if (j > 0 && nums[j] == nums[j - 1])
+                {
+                    start = preCount;
+                }
+
+                for (int i = start; i < count; i++)
+                {
+                    var list = new List<int>(dp[i]);
+                    list.Add(nums[j]);
+                    dp.Add(list);
+                }
+            }
+            return dp;
+        }
+    }
 }
