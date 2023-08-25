@@ -9,6 +9,30 @@ namespace NUnitTests
 {
     internal class P0046
     {
+        public class Solution
+        {
+            public IList<IList<int>> Permute(int[] nums)
+            {
+                var res = new List<IList<int>>();
+                // Array.Sort(nums);   if there are dups
+                Bt(0, nums, res);
+                return res;
+            }
+            public void Bt(int pos, int[] nums, List<IList<int>> res)
+            {
+                if (pos == nums.Length)
+                {
+                    res.Add(new List<int>(nums));
+                }
+                for (int i = pos; i < nums.Length; i++)
+                {
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                    Bt(pos + 1, nums, res);
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                }
+            }
+        }
+
         public class Solution0
         {
             public IList<IList<int>> Permute(int[] nums)
