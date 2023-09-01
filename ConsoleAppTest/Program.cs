@@ -1,48 +1,51 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
 
-var pl = new CreateTeamPayload
+var a = new int[] { 0, 1, 2, 3, 4, 5 };
+var p = new int[a.Length];
+var r = new int[a.Length];
+Init(a, p, r);
+Union(a, p, r, 0, 1);
+Union(a, p, r, 1, 2);
+Union(a, p, r, 1, 5);
+Union(a, p, r, 4, 5);
+
+Debug.Assert(Find(p,2) == Find(p,4));
+Console.WriteLine("success");
+
+
+
+void Init(int[] a, int[] p, int[] r)
 {
-    Name = "Hanz",
-    Description = "14150 SE 24th St",
-    teamMembers = new List<Guid>(new Guid[] { Guid.NewGuid(), Guid.NewGuid() })
-};
-Console.WriteLine(pl);
-
-var input = new CreateTeamInput(Guid.NewGuid(), 1, pl);
-
-Console.WriteLine(input);
-
-foreach(var x in input.teamMembers) Console.WriteLine(x);
-
-
-public record CreateTeamPayload
-{
-    public string Name { get; init; } = "";
-
-    public string? Description { get; init; }
-
-    public List<Guid>? teamMembers { get; init; }
-
+    for (int i = 0; i < a.Length; i++)
+    {
+        p[i] = i;
+        r[i] = 1;
+    }
 }
 
-public record CreateTeamInput : CreateTeamPayload
+int Find(int[] p, int i)
 {
-    public CreateTeamInput(Guid facilityId, int leagueId, CreateTeamPayload payload)
-    {
-        this.facilityId = facilityId;
-        this.leagueId = leagueId;
-
-        var properties = typeof(CreateTeamPayload).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        foreach (var property in properties)
-        {
-            if (property.CanWrite)
-            {
-                property.SetValue(this, property.GetValue(payload));
-            }
-        }
+    while (i != p[i]){
+        p[i] = p[p[i]];
+        i = p[i];
     }
-    public Guid facilityId { get; init; }
+    return i;
+}
 
-    public int leagueId { get; init; }
-
+bool Union(int[] a, int[] p, int[] r, int i, int j)
+{
+    int pi = Find(p, i);
+    int pj = Find(p, j);
+    if (pi == pj) return false;
+    if (r[pi] >= r[pj])
+    {
+        p[pj] = pi;
+        r[pi] += r[pj];
+    }
+    else
+    {
+        p[pi] = pj;
+        r[pj] += r[pi];
+    }
+    return true;
 }
