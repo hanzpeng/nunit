@@ -21,25 +21,30 @@ namespace NUnitTests
                 {
                     prereq[pr[0]].Add(pr[1]);
                 }
-                bool[] taken = new bool[numCourses];
-                HashSet<int> visiting = new();
+                var visited = new bool[numCourses];
                 for (int i = 0; i < numCourses; i++)
                 {
-                    if (!taken[i] && !Dfs(i, prereq, visiting, taken)) return false;
+                    if (!visited[i])
+                    {
+                        var par = new HashSet<int>();
+                        if (!Dfs(i, prereq, visited, par)) return false;
+                    }
                 }
                 return true;
             }
-
-            bool Dfs(int i, List<int>[] prereq, HashSet<int> visiting, bool[] taken)
+            bool Dfs(int i, List<int>[] prereq, bool[] visited, HashSet<int> par)
             {
-                if (visiting.Contains(i)) return false;
-                visiting.Add(i);
+                if (par.Contains(i)) return false;
+                par.Add(i);
                 foreach (int j in prereq[i])
                 {
-                    if (!taken[j] && !Dfs(j, prereq, visiting, taken)) return false;
+                    if (!visited[j])
+                    {
+                        if (!Dfs(j, prereq, visited, par)) return false;
+                    }
                 }
-                taken[i] = true;
-                visiting.Remove(i);
+                // make sure set visited after done with DFS
+                visited[i] = true;
                 return true;
             }
         }
