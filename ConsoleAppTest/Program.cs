@@ -1,51 +1,83 @@
-﻿using System.Diagnostics;
-
-var a = new int[] { 0, 1, 2, 3, 4, 5 };
-var p = new int[a.Length];
-var r = new int[a.Length];
-Init(a, p, r);
-Union(a, p, r, 0, 1);
-Union(a, p, r, 1, 2);
-Union(a, p, r, 1, 5);
-Union(a, p, r, 4, 5);
-
-Debug.Assert(Find(p,2) == Find(p,4));
-Console.WriteLine("success");
-
-
-
-void Init(int[] a, int[] p, int[] r)
+﻿public class LFUCache
 {
-    for (int i = 0; i < a.Length; i++)
+    Dictionary<int, Node> _keyToNode;
+    Dictionary<int, LinkedList<Node>> _freqToDll;
+    int _capacity = 0;
+    int _minFreq = 0;
+
+    public LFUCache(int capacity)
     {
-        p[i] = i;
-        r[i] = 1;
+        _keyToNode = new Dictionary<int, Node>();
+        _freqToDll = new Dictionary<int, LinkedList<Node>>();
+        _capacity = capacity;
+    }
+
+    public int Get(int key)
+    {
+        if (_keyToNode.ContainsKey(key))
+        {
+            IncreaseFreq(key);
+            return _keyToNode[key].Val;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public void Put(int key, int value)
+    {
+        if (_keyToNode.ContainsKey(key))
+        {
+            IncreaseFreq(key);
+            _keyToNode[key].Val = value;
+        }
+        else
+        {
+            if (_keyToNode.Count == _capacity)
+            {
+                // remove least used node
+                var minFreqDll = _freqToDll[_minFreq];
+                var firstNode = minFreqDll.First();
+                minFreqDll.RemoveFirst();
+                if (minFreqDll.Count == 0)
+                {
+                    _freqToDll.Remove(_minFreq);
+                }
+                _keyToNode.Remove(firstNode.Key);
+            }
+            var newNode = new Node(key, value, 1);
+            _freqToDll[1] = new LinkedList<Node>();
+            _freqToDll[1].AddLast(newNode);
+            _keyToNode[key] = newNode;
+            _minFreq = 1;
+        }
+    }
+
+
+    void IncreaseFreq(int key)
+    {
+        var n = _keyToNode[key];
+        _freqToDll[n.Freq].Remove(n);
+        if (_freqToDll[n.Freq].Count == 0)
+        {
+            _freqToDll.Remove(n.Freq);
+            if (n.Freq == _minFreq)
+            {
+                _minFreq++;
+            }
+        }
+        _freqToDll[n.Freq + 1] = _freqToDll.GetValueOrDefault(n.Freq + 1, new LinkedList<Node>);
+        _freqToDll[n.Freq + 1].AddLast(n);
+        n.Freq++;
     }
 }
 
-int Find(int[] p, int i)
+public class Node
 {
-    while (i != p[i]){
-        p[i] = p[p[i]];
-        i = p[i];
-    }
-    return i;
-}
-
-bool Union(int[] a, int[] p, int[] r, int i, int j)
-{
-    int pi = Find(p, i);
-    int pj = Find(p, j);
-    if (pi == pj) return false;
-    if (r[pi] >= r[pj])
-    {
-        p[pj] = pi;
-        r[pi] += r[pj];
-    }
-    else
-    {
-        p[pi] = pj;
-        r[pj] += r[pi];
-    }
-    return true;
+    public int Freq;
+    public int Key;
+    public int Val;
+    public Node() { }
+    public Node(int key, int val, int freq) { Key = key; Val = val; Freq = freq; }
 }
