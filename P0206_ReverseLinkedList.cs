@@ -10,27 +10,24 @@ namespace NUnitTests
     {
         public ListNode ReverseListRecursive(ListNode head)
         {
-            if(head == null || head.next == null) return head;
-
-            var current = head.next;
-            var newHead = ReverseListRecursive(current);
-            current.next = head;
+            if (head == null || head.next == null) return head;
+            var nextTail = head.next;
+            var nextHead = ReverseListRecursive(head.next);
+            nextTail.next = head;
             head.next = null;
-            return newHead;
-
+            return nextHead;
         }
 
         public ListNode ReverseListIterative(ListNode head)
         {
-            if (head == null || head.next == null) return head;
             ListNode pre = null;
             var cur = head;
             while (cur != null)
             {
-                var temp = cur.next;
+                var next = cur.next;
                 cur.next = pre;
                 pre = cur;
-                cur = temp;
+                cur = next;
             }
             return pre;
         }
