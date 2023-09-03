@@ -10,6 +10,52 @@ namespace NUnitTests
     {
         public class Solution
         {
+            // Topological Sort using stack
+            public int[] FindOrderDfs_WithDependencyGraph(int numCourses, int[][] prerequisites)
+            {
+                var res = new List<int>();
+                var prereq = new List<int>[numCourses];
+                for (int i = 0; i < numCourses; i++)
+                {
+                    prereq[i] = new List<int>();
+                }
+                foreach (var pr in prerequisites)
+                {
+                    prereq[pr[0]].Add(pr[1]);
+                }
+                var visited = new bool[numCourses];
+                for (int i = 0; i < numCourses; i++)
+                {
+                    if (!visited[i])
+                    {
+                        var par = new HashSet<int>();
+                        if (!Dfs(i, prereq, visited, par, res))
+                        {
+                            return new int[0];
+                        }
+                    }
+                }
+                return res.ToArray();
+
+
+                bool Dfs(int i, List<int>[] prereq, bool[] visited, HashSet<int> par, List<int> res)
+                {
+                    if (par.Contains(i)) return false;
+                    par.Add(i);
+                    foreach (int j in prereq[i])
+                    {
+                        if (!visited[j])
+                        {
+                            if (!Dfs(j, prereq, visited, par, res)) return false;
+                        }
+                    }
+                    // make sure set visited after done with DFS
+                    visited[i] = true;
+                    res.Add(i);
+                    return true;
+                }
+            }
+
             public int[] FindOrder(int numCourses, int[][] prerequisites)
             {
                 var prereqDict = new Dictionary<int, HashSet<int>>();
@@ -138,51 +184,7 @@ namespace NUnitTests
         }
 
 
-        // Topological Sort using stack
-        public int[] FindOrderDfs_WithDependencyGraph(int numCourses, int[][] prerequisites)
-        {
-            var res = new List<int>();
-            var prereq = new List<int>[numCourses];
-            for (int i = 0; i < numCourses; i++)
-            {
-                prereq[i] = new List<int>();
-            }
-            foreach (var pr in prerequisites)
-            {
-                prereq[pr[0]].Add(pr[1]);
-            }
-            var visited = new bool[numCourses];
-            for (int i = 0; i < numCourses; i++)
-            {
-                if (!visited[i])
-                {
-                    var par = new HashSet<int>();
-                    if (!Dfs(i, prereq, visited, par, res))
-                    {
-                        return new int[0];
-                    }
-                }
-            }
-            return res.ToArray();
 
-
-            bool Dfs(int i, List<int>[] prereq, bool[] visited, HashSet<int> par, List<int> res)
-            {
-                if (par.Contains(i)) return false;
-                par.Add(i);
-                foreach (int j in prereq[i])
-                {
-                    if (!visited[j])
-                    {
-                        if (!Dfs(j, prereq, visited, par, res)) return false;
-                    }
-                }
-                // make sure set visited after done with DFS
-                visited[i] = true;
-                res.Add(i);
-                return true;
-            }
-        }
 
         // Topological Sort using array
         public int[] FindOrderDfs_NoStack(int numCourses, int[][] prerequisites)
