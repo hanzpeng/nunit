@@ -319,10 +319,10 @@ namespace NUnitTests
                     if (_keyToNode.Count == _capacity)
                     {
                         // remove least used node
-                        var minFreqDll = _freqToList[_minFreq];
-                        var firstNode = minFreqDll.First();
-                        minFreqDll.RemoveFirst();
-                        if (minFreqDll.Count == 0)
+                        var minFreqList = _freqToList[_minFreq];
+                        var firstNode = minFreqList.First();
+                        minFreqList.RemoveFirst();
+                        if (minFreqList.Count == 0)
                         {
                             _freqToList.Remove(_minFreq);
                         }
