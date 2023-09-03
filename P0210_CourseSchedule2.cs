@@ -141,36 +141,44 @@ namespace NUnitTests
         // Topological Sort using stack
         public int[] FindOrderDfs_WithDependencyGraph(int numCourses, int[][] prerequisites)
         {
+            var res = new List<int>();
+            var prereq = new List<int>[numCourses];
+            for (int i = 0; i < numCourses; i++)
             {
-                var g = new List<int>[numCourses];
-                for (int i = 0; i < numCourses; i++)
-                {
-                    g[i] = new List<int>();
-                }
-                foreach (var pr in prerequisites)
-                {
-                    g[pr[0]].Add(pr[1]);
-                }
-                bool[] visited = new bool[numCourses];
-                HashSet<int> parents = new();
-                List<int> res = new();
-                for (int i = 0; i < numCourses; i++)
-                {
-                    if (!visited[i] && !Dfs(i, g, parents, visited, res)) return Array.Empty<int>();
-                }
-                return res.ToArray();
+                prereq[i] = new List<int>();
             }
-
-            bool Dfs(int i, List<int>[] g, HashSet<int> parents, bool[] visited, List<int> res)
+            foreach (var pr in prerequisites)
             {
-                if (parents.Contains(i)) return false;
-                parents.Add(i);
-                foreach (int j in g[i])
+                prereq[pr[0]].Add(pr[1]);
+            }
+            var visited = new bool[numCourses];
+            for (int i = 0; i < numCourses; i++)
+            {
+                if (!visited[i])
                 {
-                    if (!visited[j] && !Dfs(j, g, parents, visited, res)) return false;
+                    var par = new HashSet<int>();
+                    if (!Dfs(i, prereq, visited, par, res))
+                    {
+                        return new int[0];
+                    }
                 }
+            }
+            return res.ToArray();
+
+
+            bool Dfs(int i, List<int>[] prereq, bool[] visited, HashSet<int> par, List<int> res)
+            {
+                if (par.Contains(i)) return false;
+                par.Add(i);
+                foreach (int j in prereq[i])
+                {
+                    if (!visited[j])
+                    {
+                        if (!Dfs(j, prereq, visited, par, res)) return false;
+                    }
+                }
+                // make sure set visited after done with DFS
                 visited[i] = true;
-                parents.Remove(i);
                 res.Add(i);
                 return true;
             }
