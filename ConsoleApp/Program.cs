@@ -130,7 +130,7 @@ namespace ConsoleApp
             while (pq.Count > 0)
             {
                 var item = pq.Dequeue();
-                Console.WriteLine(item.I + item.S);
+                //Console.WriteLine(item.I + item.S);
             }
 
             //////////////////////////////////////////
@@ -350,7 +350,7 @@ namespace ConsoleApp
             Console.WriteLine(board.Length); // 12
 
             //Array.Sort(nums)
-            var nums = new int[] { 2, 1, 4, 3, 5 };
+            nums = new int[] { 2, 1, 4, 3, 5 };
             Console.WriteLine(Array.BinarySearch(nums, 4)); // 2
             Array.Sort(nums);
             Array.Reverse(nums);

@@ -60,7 +60,7 @@ namespace NUnitTests
                 }
             }
         }
-        public class Solution
+        public class Solution1
         {
             public IList<IList<int>> Permute(int[] nums)
             {
