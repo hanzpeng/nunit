@@ -97,7 +97,7 @@ namespace ConsoleApp
             Console.WriteLine(3.1415926.ToString("000.00000"));
 
             //////////////////////////////////////////
-            // ParorityQueue Comparer
+            // PriorityQueue Comparer
             /// var pq = new PriorityQueue<TElement, TPrioirty>(Comparer<(TPrioirty)>.Create((x, y) => {x.CompareTo(y);});
             /// 
 
