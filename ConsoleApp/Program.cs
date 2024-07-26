@@ -237,20 +237,34 @@ namespace ConsoleApp
                 Console.WriteLine(kv.Key + " " + kv.Value);
             }
 
-            // call by out
+            // call by out, ref, value
+            // by out
+            void GetLastName(out string lastName) {
+                lastName = "zhang";
+            }
             GetLastName(out string lastName);
-            Console.WriteLine(lastName);
+            Console.WriteLine(lastName);//zhang
 
-            // call be ref
+            // by ref
+            void SetFirstName(ref string firstName) {
+                firstName = "hanzhong";
+            }
             string firstName = "";
             SetFirstName(ref firstName);
-            Console.WriteLine(firstName);
+            Console.WriteLine(firstName);//hanzhong
 
+            // by value
+            void SetMiddleName(string middleName) {
+                middleName = "hanz";
+            }
+            string middleName = "empty";
+            SetMiddleName(middleName);
+            Console.WriteLine(middleName);//empty
 
             // Random
             var r = new Random();
             var randomInteger = r.Next(); // 0 <= randomInt < int.MaxValue;
-            var randomDouble = r.NextDouble(); // 0.0 <= yyy < 1.0
+            var randomDouble = r.NextDouble(); // 0.0 <= randomDouble < 1.0
             var randomK = r.Next(40); // 0 <= randomK< 40
 
             // Tuple List
@@ -324,16 +338,16 @@ namespace ConsoleApp
             Console.WriteLine(int.Parse("12"));
             Console.WriteLine(int.MaxValue);// 2,147,483,647
             Console.WriteLine(int.MinValue);//-2,147,483,648
-            Console.WriteLine(int.TryParse("123", out int res) ? res : "not int");
-            Console.WriteLine(int.TryParse("123abc", out int res2) ? res : "not int");
+            Console.WriteLine(int.TryParse("123", out int res) ? res : "not int"); // 123
+            Console.WriteLine(int.TryParse("123abc", out int res2) ? res : "not int"); // not int
 
             // Math 
-            Console.WriteLine(Math.Max(1, 2));
-            Console.WriteLine(Math.Min(1, 2));
-            Console.WriteLine((int)Math.Pow(10, 3));
-            Console.WriteLine(Math.Abs(-12321));
-            Console.WriteLine(Math.Ceiling(1.23));
-            Console.WriteLine(Math.Floor(1.23));
+            Console.WriteLine(Math.Max(1, 2)); //2
+            Console.WriteLine(Math.Min(1, 2)); //1
+            Console.WriteLine((int)Math.Pow(10, 3)); //1000
+            Console.WriteLine(Math.Abs(-12321)); //12321
+            Console.WriteLine(Math.Ceiling(1.23)); //2
+            Console.WriteLine(Math.Floor(1.23)); //1
 
 
             // double
