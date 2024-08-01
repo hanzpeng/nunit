@@ -30,7 +30,7 @@ namespace NUnitTests
                     if (valueUsedInCurIndex.Contains(nums[j])) continue;
                     valueUsedInCurIndex.Add(nums[j]);
 
-                    // put every remaining number in current index, including the current index it self
+                    // put every remaining number in current index, including the current index itself
                     (nums[curIndex], nums[j]) = (nums[j], nums[curIndex]);
                     // for each current index, proceed to next the index 
                     var nextIndex = curIndex + 1;
@@ -135,6 +135,152 @@ namespace NUnitTests
                     dfs(nums, res, cur, visited);
                     visited[i] = false;
                     cur.RemoveAt(cur.Count - 1);
+                }
+            }
+        }
+
+        public class Solution4 {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                Array.Sort(nums);
+                Bt(0, nums, res);
+                return res;
+            }
+            public void Bt(int pos, int[] nums, List<IList<int>> res) {
+                if (pos == nums.Length) {
+                    res.Add(new List<int>(nums));
+                }
+                for (int i = pos; i < nums.Length; i++) {
+                    if (i > pos && nums[i] == nums[i - 1]) continue;
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                    Bt(pos + 1, nums, res);
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                }
+            }
+
+        }
+
+        public class Solution5_Iterative {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                if (nums == null || nums.Length == 0) {
+                    return res;
+                }
+
+                Array.Sort(nums);
+
+                for (var j = 0; j < nums.Length; j++) {
+                    if (j > 0 && nums[j] == nums[j - 1]) continue;
+                    var list = new List<int>();
+                    list.Add(j);
+                    res.Add(list);
+                }
+
+                for (var i = 1; i < nums.Length; i++) {
+                    var res1 = new List<IList<int>>();
+                    foreach (var list in res) {
+                        for (var j = 0; j < nums.Length; j++) {
+                            if (list.Contains(j)) continue;
+                            if (j > 0 && nums[j] == nums[j - 1] && !list.Contains(j - 1)) continue;
+                            var newList = new List<int>(list);
+                            newList.Add(j);
+                            res1.Add(newList);
+                        }
+                    }
+                    res = res1;
+                }
+                return res.Select(l => (IList<int>)l.Select(j => nums[j]).ToList()).ToList();
+            }
+        }
+
+        public class Solution5b__Iterative {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                if (nums == null || nums.Length == 0) {
+                    return res;
+                }
+
+                Array.Sort(nums);
+
+                for (var j = 0; j < nums.Length; j++) {
+                    if (j > 0 && nums[j] == nums[j - 1]) continue;
+                    var list = new List<int>();
+                    list.Add(j);
+                    res.Add(list);
+                }
+
+                for (var i = 1; i < nums.Length; i++) {
+                    var res1 = new List<IList<int>>();
+                    foreach (var list in res) {
+                        var prev = nums[0] - 1;
+                        for (var j = 0; j < nums.Length; j++) {
+                            if (list.Contains(j)) continue;
+                            if (prev == nums[j]) continue;
+                            var newList = new List<int>(list);
+                            newList.Add(j);
+                            res1.Add(newList);
+                            prev = nums[j];
+                        }
+                    }
+                    res = res1;
+                }
+                return res.Select(l => (IList<int>)l.Select(j => nums[j]).ToList()).ToList();
+            }
+        }
+
+        public class Solution6 {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                if (nums == null || nums.Length == 0) {
+                    return res;
+                }
+
+                Array.Sort(nums);
+                BT(nums, res, new Stack<int>());
+                return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
+            }
+
+            public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
+                if (perm.Count == nums.Length) {
+                    res.Add(new List<int>(perm));
+                    return;
+                }
+
+                for (int i = 0; i < nums.Length; i++) {
+                    if (perm.Contains(i)) continue;
+                    if (i > 0 && nums[i] == nums[i - 1] && !perm.Contains(i - 1)) continue;
+                    perm.Push(i);
+                    BT(nums, res, perm);
+                    perm.Pop();
+                }
+            }
+        }
+
+        public class Solution7{
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                if (nums == null || nums.Length == 0) {
+                    return res;
+                }
+                Array.Sort(nums);
+                BT(nums, res, new Stack<int>());
+                return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
+            }
+
+            public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
+                if (perm.Count == nums.Length) {
+                    res.Add(new List<int>(perm));
+                    return;
+                }
+
+                int previousNumber = nums[0] - 1; // initially set previousNumber to a number that is not in the nums array
+                for (int i = 0; i < nums.Length; i++) {
+                    if (perm.Contains(i)) continue;
+                    if (nums[i] == previousNumber) continue;
+                    perm.Push(i);
+                    BT(nums, res, perm);
+                    perm.Pop();
+                    previousNumber = nums[i];
                 }
             }
         }
