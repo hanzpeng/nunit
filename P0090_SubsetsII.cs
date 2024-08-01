@@ -169,4 +169,33 @@ namespace P0090_SubsetsII
             }
         }
     }
+
+    public class Solution_DP_Iter_D {
+        public IList<IList<int>> SubsetsWithDup(int[] nums) {
+            var res = new List<IList<int>>();
+            res.Add(new List<int>());
+            if (nums == null || nums.Length == 0) return res;
+            Array.Sort(nums);
+            int? prevNum = null;
+            var res1 = new List<IList<int>>();
+            var res2 = new List<IList<int>>();
+            for (var i = 0; i < nums.Length; i++) {
+                var num = nums[i];
+                if (prevNum == num) {
+                    res2 = new List<IList<int>>(res1);
+                } else {
+                    res2 = res;
+                }
+                prevNum = num;
+                res1 = new List<IList<int>>();
+                foreach (var li in res2) {
+                    var li1 = new List<int>(li);
+                    li1.Add(num);
+                    res1.Add(li1);
+                }
+                res.AddRange(res1);
+            }
+            return res;
+        }
+    }
 }
