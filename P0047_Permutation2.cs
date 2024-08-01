@@ -252,64 +252,64 @@ namespace NUnitTests
             }
         }
 
-        public class Solution7{
-            public IList<IList<int>> PermuteUnique(int[] nums) {
-                var res = new List<IList<int>>();
-                if (nums == null || nums.Length == 0) {
-                    return res;
-                }
-                Array.Sort(nums);
-                BT(nums, res, new Stack<int>());
-                return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
-            }
+public class Solution7{
+    public IList<IList<int>> PermuteUnique(int[] nums) {
+        var res = new List<IList<int>>();
+        if (nums == null || nums.Length == 0) {
+            return res;
+        }
+        Array.Sort(nums);
+        BT(nums, res, new Stack<int>());
+        return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
+    }
 
-            public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
-                if (perm.Count == nums.Length) {
-                    res.Add(new List<int>(perm));
-                    return;
-                }
-
-                int previousNumber = nums[0] - 1; // initially set previousNumber to a number that is not in the nums array
-                for (int i = 0; i < nums.Length; i++) {
-                    if (perm.Contains(i)) continue;
-                    if (nums[i] == previousNumber) continue;
-                    perm.Push(i);
-                    BT(nums, res, perm);
-                    perm.Pop();
-                    previousNumber = nums[i];
-                }
-            }
+    public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
+        if (perm.Count == nums.Length) {
+            res.Add(new List<int>(perm));
+            return;
         }
 
-        public class Solution8_pre_rem {
-            public IList<IList<int>> PermuteUnique(int[] nums) {
-                var res = new List<IList<int>>();
-                if (nums == null || nums.Length == 0) {
-                    return res;
-                }
-                Array.Sort(nums);
-                BT(new Stack<int>(), nums.ToList(), res);
-                return res;
-            }
-
-            public void BT(Stack<int> pre, List<int> rem, List<IList<int>> res) {
-                if (rem.Count == 0) {
-                    res.Add(new List<int>(pre));
-                    return;
-                }
-
-                int? numAlreadyConsidered = null;
-                for (var i = 0; i < rem.Count; i++) {
-                    var num = rem[i];
-                    if (numAlreadyConsidered == num) continue;
-                    pre.Push(num);
-                    rem.RemoveAt(i);
-                    BT(pre, rem, res);
-                    pre.Pop();
-                    rem.Insert(i, num);
-                    numAlreadyConsidered = num;
-                }
-            }
+        int? previousNumber = null;
+        for (int i = 0; i < nums.Length; i++) {
+            if (perm.Contains(i)) continue;
+            if (nums[i] == previousNumber) continue;
+            perm.Push(i);
+            BT(nums, res, perm);
+            perm.Pop();
+            previousNumber = nums[i];
         }
+    }
+}
+
+public class Solution8_pre_rem {
+    public IList<IList<int>> PermuteUnique(int[] nums) {
+        var res = new List<IList<int>>();
+        if (nums == null || nums.Length == 0) {
+            return res;
+        }
+        Array.Sort(nums);
+        BT(new Stack<int>(), nums.ToList(), res);
+        return res;
+    }
+
+    public void BT(Stack<int> pre, List<int> rem, List<IList<int>> res) {
+        if (rem.Count == 0) {
+            res.Add(new List<int>(pre));
+            return;
+        }
+
+        int? previousNumber = null;
+        for (var i = 0; i < rem.Count; i++) {
+            var num = rem[i];
+            if (previousNumber  == num) continue;
+            pre.Push(num);
+            rem.RemoveAt(i);
+            BT(pre, rem, res);
+            pre.Pop();
+            rem.Insert(i, num);
+            previousNumber  = num;
+        }
+    }
+}
     }
 }
