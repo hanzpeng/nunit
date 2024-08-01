@@ -280,5 +280,36 @@ namespace NUnitTests
                 }
             }
         }
+
+        public class Solution8_pre_rem {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                if (nums == null || nums.Length == 0) {
+                    return res;
+                }
+                Array.Sort(nums);
+                BT(new Stack<int>(), nums.ToList(), res);
+                return res;
+            }
+
+            public void BT(Stack<int> pre, List<int> rem, List<IList<int>> res) {
+                if (rem.Count == 0) {
+                    res.Add(new List<int>(pre));
+                    return;
+                }
+
+                int? numAlreadyConsidered = null;
+                for (var i = 0; i < rem.Count; i++) {
+                    var num = rem[i];
+                    if (numAlreadyConsidered == num) continue;
+                    pre.Push(num);
+                    rem.RemoveAt(i);
+                    BT(pre, rem, res);
+                    pre.Pop();
+                    rem.Insert(i, num);
+                    numAlreadyConsidered = num;
+                }
+            }
+        }
     }
 }
