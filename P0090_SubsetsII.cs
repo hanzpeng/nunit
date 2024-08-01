@@ -198,4 +198,33 @@ namespace P0090_SubsetsII
             return res;
         }
     }
+
+    public class Solution {
+        public IList<IList<int>> SubsetsWithDup(int[] nums) {
+            var res = new List<IList<int>>();
+            res.Add(new List<int>());
+            if (nums == null || nums.Length == 0) return res;
+            Array.Sort(nums);
+            Dfs(res, 0, nums, 1);
+            return res;
+        }
+
+        void Dfs(List<IList<int>> res, int pos, int[] nums, int resCount) {
+            if (pos == nums.Length) {
+                return;
+            }
+            var start = 0;
+            if (pos > 0 && nums[pos] == nums[pos - 1]) {
+                start = resCount;
+            }
+            resCount = res.Count;
+            for (int i = start; i < resCount; i++) {
+                var li = new List<int>(res[i]);
+                li.Add(nums[pos]);
+                res.Add(li);
+            }
+            Dfs(res, pos + 1, nums, resCount);
+        }
+    }
+
 }
