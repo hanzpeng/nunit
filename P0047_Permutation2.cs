@@ -37,7 +37,7 @@ namespace NUnitTests
             }
         }
 
-        public class Solution1
+        public class Solution1_UsedIndex
         {
             public IList<IList<int>> PermuteUnique(int[] nums)
             {
@@ -69,18 +69,18 @@ namespace NUnitTests
             }
         }
 
-        public class Solution2
+        public class Solution2_NumCount
         {
             public IList<IList<int>> PermuteUnique(int[] nums)
             {
-                Dictionary<int, int> numsMap = new Dictionary<int, int>();
+                Dictionary<int, int> numCount = new Dictionary<int, int>();
                 foreach (int num in nums)
                 {
-                    numsMap[num] = numsMap.GetValueOrDefault(num, 0) + 1;
+                    numCount[num] = numCount.GetValueOrDefault(num, 0) + 1;
                 }
 
                 IList<IList<int>> result = new List<IList<int>>();
-                Dfs(numsMap, new Stack<int>(), result, nums.Length);
+                Dfs(numCount, new Stack<int>(), result, nums.Length);
                 return result;
             }
             void Dfs(Dictionary<int, int> numsMap, Stack<int> path, IList<IList<int>> result, int length)
