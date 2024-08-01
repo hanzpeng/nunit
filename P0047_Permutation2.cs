@@ -211,18 +211,20 @@ namespace NUnitTests {
                 return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
             }
 
-            public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
-                if (perm.Count == nums.Length) {
-                    res.Add(new List<int>(perm));
+            public void BT(int[] nums, List<IList<int>> res, Stack<int> pre) {
+                if (pre.Count == nums.Length) {
+                    res.Add(new List<int>(pre));
                     return;
                 }
 
+                int? previousNumber = null;
                 for (int i = 0; i < nums.Length; i++) {
-                    if (perm.Contains(i)) continue;
-                    if (i > 0 && nums[i] == nums[i - 1] && !perm.Contains(i - 1)) continue;
-                    perm.Push(i);
-                    BT(nums, res, perm);
-                    perm.Pop();
+                    if (pre.Contains(i)) continue;
+                    if (previousNumber == nums[i]) continue;
+                    pre.Push(i);
+                    BT(nums, res, pre);
+                    pre.Pop();
+                    previousNumber = nums[i];
                 }
             }
         }
@@ -238,19 +240,19 @@ namespace NUnitTests {
                 return res.Select(l => (IList<int>)l.Select(i => nums[i]).ToList()).ToList();
             }
 
-            public void BT(int[] nums, List<IList<int>> res, Stack<int> perm) {
-                if (perm.Count == nums.Length) {
-                    res.Add(new List<int>(perm));
+            public void BT(int[] nums, List<IList<int>> res, Stack<int> pre) {
+                if (pre.Count == nums.Length) {
+                    res.Add(new List<int>(pre));
                     return;
                 }
 
                 int? previousNumber = null;
                 for (int i = 0; i < nums.Length; i++) {
-                    if (perm.Contains(i)) continue;
+                    if (pre.Contains(i)) continue;
                     if (nums[i] == previousNumber) continue;
-                    perm.Push(i);
-                    BT(nums, res, perm);
-                    perm.Pop();
+                    pre.Push(i);
+                    BT(nums, res, pre);
+                    pre.Pop();
                     previousNumber = nums[i];
                 }
             }
