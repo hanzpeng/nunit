@@ -7,6 +7,27 @@ using System.Threading.Tasks;
 namespace NUnitTests {
     internal class P0047_Permutation2_A {
 
+        public class Solution_swap {
+            public IList<IList<int>> PermuteUnique(int[] nums) {
+                var res = new List<IList<int>>();
+                Bt(pos: 0, nums, res);
+                return res;
+            }
+            public void Bt(int pos, int[] nums, List<IList<int>> res) {
+                if (pos == nums.Length) {
+                    res.Add(new List<int>(nums));
+                }
+                var numsTaken = new HashSet<int>();
+                for (int i = pos; i < nums.Length; i++) {
+                    if (numsTaken.Contains(nums[i])) continue;
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                    Bt(pos + 1, nums, res);
+                    (nums[pos], nums[i]) = (nums[i], nums[pos]);
+                    numsTaken.Add(nums[i]);
+                }
+            }
+        }
+
         public class Solution0 {
             public IList<IList<int>> PermuteUnique(int[] nums) {
                 var res = new List<IList<int>>();
