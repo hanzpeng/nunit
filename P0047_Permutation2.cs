@@ -20,10 +20,10 @@ namespace NUnitTests {
                 var numsTaken = new HashSet<int>();
                 for (int i = pos; i < nums.Length; i++) {
                     if (numsTaken.Contains(nums[i])) continue;
+                    numsTaken.Add(nums[i]);
                     (nums[pos], nums[i]) = (nums[i], nums[pos]);
                     Bt(pos + 1, nums, res);
                     (nums[pos], nums[i]) = (nums[i], nums[pos]);
-                    numsTaken.Add(nums[i]);
                 }
             }
         }
