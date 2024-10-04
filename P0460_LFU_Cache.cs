@@ -270,7 +270,7 @@ namespace NUnitTests
             {
                 if (IsEmpty())
                 {
-                    return null;
+                    return default(T);
                 }
                 var n = Remove(Head.Next);
                 return n.Val;
