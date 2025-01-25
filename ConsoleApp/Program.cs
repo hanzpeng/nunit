@@ -10,7 +10,12 @@ namespace ConsoleApp
     internal class Program
     {
         static void Main(string[] args)
-        {
+        {   // reverse a string
+            var word = "abc";
+            var wr = new string(word.Reverse().ToArray());
+            Console.WriteLine(word);
+            Console.WriteLine(wr);
+
             //swap two integer
             var nums = new int[10];
             (nums[1], nums[2]) = (nums[2], nums[1]);
