@@ -50,18 +50,18 @@ namespace P0336_Palindrome_Pairs_Trie {
 
             for (int k = 0; k < words.Length; k++) {
                 var w = words[k];
-                var suffix2 = g2.GetSuffixesForWord(w);
+                var suffix2 = g2.GetSuffixesWithPrefix(w);
                 foreach (var tup in suffix2) {
                     if (k != tup.Item2 && IsPalin(tup.Item1)) {
-                        res.Add(new List<int> { k, tup.Item2 });
+                        res.Add([k, tup.Item2]);
                     }
                 }
 
                 var wr = new string(w.Reverse().ToArray());
-                var suffix1 = g1.GetSuffixesForWord(wr);
+                var suffix1 = g1.GetSuffixesWithPrefix(wr);
                 foreach (var tup in suffix1) {
-                    if (k != tup.Item2 && IsPalin(tup.Item1) && w.Length < words[tup.Item2].Length) {
-                        res.Add(new List<int> { tup.Item2, k });
+                    if (k != tup.Item2 && IsPalin(tup.Item1) && wr.Length < words[tup.Item2].Length) {
+                        res.Add([tup.Item2, k]);
                     }
                 }
             }
@@ -82,8 +82,6 @@ namespace P0336_Palindrome_Pairs_Trie {
             }
 
             public TrieNode GetNode(string w) {
-                if (w == null) return null;
-                if (w == "") return this;
                 var n = this;
                 foreach (char c in w) {
                     if (!n.Children.ContainsKey(c)) return null;
@@ -92,21 +90,21 @@ namespace P0336_Palindrome_Pairs_Trie {
                 return n;
             }
 
-            public List<(string, int)> GetSuffixesForWord(string w) {
+            public List<(string, int)> GetSuffixesWithPrefix(string prefix) {
                 List<(string, int)> res = new();
-                var n = GetNode(w);
+                var n = GetNode(prefix);
                 if (n != null) {
-                    n.GetAllWords("", res);
+                    n.DfxGetAllSuffix("", res);
                 }
                 return res;
             }
 
-            public void GetAllWords(string pre, List<(string, int)> res) {
-                if (Index >= 0) {
-                    res.Add((pre, Index));
+            public void DfxGetAllSuffix(string current, List<(string, int)> res) {
+                if (this.Index >= 0) {
+                    res.Add((current, this.Index));
                 }
-                foreach (var child in Children) {
-                    child.Value.GetAllWords(pre + child.Key, res);
+                foreach (var child in this.Children) {
+                    child.Value.DfxGetAllSuffix(current + child.Key, res);
                 }
             }
         }
