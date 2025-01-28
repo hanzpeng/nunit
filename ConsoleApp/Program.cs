@@ -195,16 +195,16 @@ namespace ConsoleApp
             var second = first?.Next;
             Console.WriteLine(second?.Value);
 
-            Console.WriteLine(q.First());
-            Console.WriteLine(q.Last());
+            Console.WriteLine(q.First.Value);
+            Console.WriteLine(q.Last.Value);
             Console.WriteLine();
             q.RemoveFirst();
-            Console.WriteLine(q.First());
-            Console.WriteLine(q.Last());
+            Console.WriteLine(q.First.Value);
+            Console.WriteLine(q.Last.Value);
             Console.WriteLine();
             q.RemoveLast();
-            Console.WriteLine(q.First());
-            Console.WriteLine(q.Last());
+            Console.WriteLine(q.First.Value);
+            Console.WriteLine(q.Last.Value);
             Console.WriteLine(q.Count);
 
 
