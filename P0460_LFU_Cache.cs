@@ -281,8 +281,8 @@ namespace NUnitTests
     internal class P046_LFU_Cache2
     {
         public class LFUCache {
-            Dictionary<int, LinkedListNode<Node>> _keyToNode = new();
-            Dictionary<int, LinkedList<Node>> _freqToList = new();
+            Dictionary<int, LinkedListNode<Item>> _keyToNode = new();
+            Dictionary<int, LinkedList<Item>> _freqToList = new();
             int _capacity = 0;
             int _minFreq = 0;
 
@@ -305,7 +305,6 @@ namespace NUnitTests
                     _keyToNode[key].Value.Val = value;
                 } else {
                     if (_keyToNode.Count == _capacity) {
-                        // remove least used node
                         var minFreqList = _freqToList[_minFreq];
                         var firstNode = minFreqList.First;
                         minFreqList.RemoveFirst();
@@ -314,40 +313,35 @@ namespace NUnitTests
                         }
                         _keyToNode.Remove(firstNode.Value.Key);
                     }
-                    var newNode = new Node(key, value, 1);
-
-                    _freqToList[1] = _freqToList.GetValueOrDefault(1, new LinkedList<Node>());
-                    var llNode = _freqToList[1].AddLast(newNode);
-                    _keyToNode[key] = llNode;
+                    _freqToList[1] = _freqToList.GetValueOrDefault(1, new LinkedList<Item>());
+                    _keyToNode[key] = _freqToList[1].AddLast(new Item(key, value, 1));
                     _minFreq = 1;
                 }
             }
 
 
             void IncreaseFreq(int key) {
-                var node = _keyToNode[key];
-                var n = node.Value;
-                _freqToList[n.Freq].Remove(node);
-                if (_freqToList[n.Freq].Count == 0) {
-                    _freqToList.Remove(n.Freq);
-                    if (n.Freq == _minFreq) {
+                var llNode = _keyToNode[key];
+                var item = llNode.Value;
+                _freqToList[item.Freq].Remove(llNode);
+                if (_freqToList[item.Freq].Count == 0) {
+                    _freqToList.Remove(item.Freq);
+                    if (item.Freq == _minFreq) {
                         _minFreq++;
                     }
                 }
-                n.Freq++;
-                _freqToList[n.Freq] = _freqToList.GetValueOrDefault(n.Freq, new LinkedList<Node>());
-                _keyToNode[key] = _freqToList[n.Freq].AddLast(n);
+                item.Freq++;
+                _freqToList[item.Freq] = _freqToList.GetValueOrDefault(item.Freq, new LinkedList<Item>());
+                _keyToNode[key] = _freqToList[item.Freq].AddLast(item);
             }
         }
 
-        public class Node {
+        public class Item {
             public int Freq;
             public int Key;
             public int Val;
-            public Node() { }
-            public Node(int key, int val, int freq) { Key = key; Val = val; Freq = freq; }
+            public Item() { }
+            public Item(int key, int val, int freq) { Key = key; Val = val; Freq = freq; }
         }
-
-
     }
 }
