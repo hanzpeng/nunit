@@ -18,6 +18,43 @@ namespace P0004_MedianTwoSortedArrays
             Assert.AreEqual(4, findMedianSortedArrays_BinarySearch(new int[] {1,2,}, new int[] {4,5,6}));
             Assert.AreEqual(3, findMedianSortedArrays_BinarySearch(new int[] { 1, 2, 3, 4, 5}, new int[] { 1,2,3,4,5}));
         }
+
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+            if (nums1.Length > nums2.Length) return FindMedianSortedArrays(nums2, nums1);
+            // binary search how many items to select to the left partition of the final sorted array
+            var start = 0;  // take zero item from nums1 to the left partition
+            var end = nums1.Length;  // take nums1.Length times from nums1 to the left partition
+            var halfLen = (nums1.Length + nums2.Length + 1) / 2; // total items in the final left partition
+
+            while (start <= end) {
+                var i = (start + end) / 2; // put i item from nums1 to the left partition
+                var j = halfLen - i;   // take j item from nums2 to the left partition
+
+                var Left1Max = int.MinValue;
+                var Left2Max = int.MinValue;
+                if (i > 0) Left1Max = nums1[i - 1];
+                if (j > 0) Left2Max = nums2[j - 1];
+
+                var Right1Min = int.MaxValue;
+                var Right2Min = int.MaxValue;
+                if (i < nums1.Length) Right1Min = nums1[i];
+                if (j < nums2.Length) Right2Min = nums2[j];
+
+                if (Left1Max <= Right2Min && Left2Max <= Right1Min) {
+                    var LeftMax = Math.Max(Left1Max, Left2Max);
+                    var RightMin = Math.Min(Right1Min, Right2Min);
+                    if ((nums1.Length + nums2.Length) % 2 == 0) return (double)(LeftMax + RightMin) / 2;
+                    else return LeftMax;
+                } else if (Left1Max > Right2Min) {
+                    end = i - 1;
+                } else {
+                    start = i + 1;
+                }
+            }
+            return -1;
+        }
+
+
         public double GetMedianOfSortedArray_BrutalForce(int[] nums1, int[] nums2)
         {
             int n1 = nums1.Length;
