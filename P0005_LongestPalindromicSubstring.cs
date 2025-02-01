@@ -13,7 +13,7 @@ namespace NUnitTests
             public string LongestPalindrome(string s)
             {
                 if (String.IsNullOrEmpty(s)) return s;
-                string dp = s.Substring(0, 1);
+                string dp = "";
                 for (int i = 0; i < s.Length - 1; i++)
                 {
                     var cur = PalindromeWithMiddleAt(i, i, s);
@@ -27,10 +27,8 @@ namespace NUnitTests
                 return dp;
             }
 
-            public string PalindromeWithMiddleAt(int i, int j, string s)
+            public string PalindromeWithMiddleAt(int l, int r, string s)
             {
-                var l = i;
-                var r = j;
                 while (l > 0 && r < s.Length - 1 && s[l - 1] == s[r + 1])
                 {
                     l--;
