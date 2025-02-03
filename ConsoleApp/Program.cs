@@ -10,7 +10,14 @@ namespace ConsoleApp
     internal class Program
     {
         static void Main(string[] args)
-        {   // reverse a string
+        {
+            // new a list
+            var res1 = new List<int>() { 1, 2, 3, 4, 5 };
+            var res2 = new List<int> { 1, 2, 3, 4, 5 };
+            var res3 = new List<int>([1, 2, 3, 4, 5]);
+            List<int> res4 = [1, 2, 3, 4, 5];
+
+            // reverse a string
             var word = "abc";
             var wr = new string(word.Reverse().ToArray());
             Console.WriteLine(word);
