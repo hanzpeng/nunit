@@ -12,9 +12,9 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             // new a list
-            var res1 = new List<int>() { 1, 2, 3, 4, 5 };
-            var res2 = new List<int> { 1, 2, 3, 4, 5 };
-            var res3 = new List<int>([1, 2, 3, 4, 5]);
+            var res11 = new List<int>() { 1, 2, 3, 4, 5 };
+            var res22 = new List<int> { 1, 2, 3, 4, 5 };
+            var res33 = new List<int>([1, 2, 3, 4, 5]);
             List<int> res4 = [1, 2, 3, 4, 5];
 
             // reverse a string
