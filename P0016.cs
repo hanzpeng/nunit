@@ -24,8 +24,10 @@ namespace NUnitTests
 
                         if (sum < target) {
                             ++lo;
-                        } else {
+                        } else if (sum > target) {
                             --hi;
+                        } else {
+                            return sum;
                         }
                     }
                 }
