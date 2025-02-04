@@ -8,22 +8,54 @@ namespace NUnitTests
 {
     internal class P0017_PhoneNumber
     {
+        public class Solution {
+            public IList<string> LetterCombinations(string digits) {
+                List<string> res = new();
+                if (string.IsNullOrEmpty(digits)) return res;
+                char[][] map = [    [],
+                                    [],
+                                    ['a','b','c'],
+                                    ['d','e','f'],
+                                    ['g','h','i'],
+                                    ['j','k','l'],
+                                    ['m','n','o'],
+                                    ['p','q','r','s'],
+                                    ['t','u','v'],
+                                    ['w','x','y','z']
+                                ];
+                Dfs(map, digits, 0, res, new List<char>());
+                return res;
+
+            }
+            void Dfs(char[][] map, string digits, int index, List<string> res, List<char> charList) {
+                if (index == digits.Length) {
+                    res.Add(new String(charList.ToArray()));
+                    return;
+                }
+                foreach (var c in map[(int)(digits[index] - '0')]) {
+                    charList.Add(c);
+                    Dfs(map, digits, index + 1, res, charList);
+                    charList.RemoveAt(charList.Count - 1);
+                }
+            }
+        }
+
         public IList<string> LetterCombinations(string digits)
         {
             IList<string> res = new List<string>();
             if (digits == null || digits.Length == 0) return res;
             var map = new string[][]
             {
-                new string[]{},
-                new string[]{},
-                new string[]{"a","b","c"},
-                new string[]{"d","e","f"},
-                new string[]{"g","h","i"},
-                new string[]{"j","k","l"},
-                new string[]{"m","n","o"},
-                new string[]{"p","q","r","s"},
-                new string[]{"t","u","v"},
-                new string[]{"w","x","y","z"}
+                [],
+                [],
+                ["a","b","c"],
+                ["d","e","f"],
+                ["g","h","i"],
+                ["j","k","l"],
+                ["m","n","o"],
+                ["p","q","r","s"],
+                ["t","u","v"],
+                ["w","x","y","z"]
             };
 
             foreach(var c in map[digits[0] - '0']){
