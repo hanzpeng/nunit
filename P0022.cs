@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace P0022
 {
@@ -39,6 +40,33 @@ namespace P0022
             }
             else{
                 //should not come here
+            }
+        }
+    }
+
+    public class Solution {
+        public IList<string> GenerateParenthesis(int n) {
+            var res = new List<string>();
+            Bt(n, 1, res, new Stack<char>(), 0, 0);
+            return res;
+        }
+
+        void Bt(int n, int index, List<string> res, Stack<char> stack, int l, int r) {
+            if (index == 2 * n + 1) {
+                res.Add(new string(stack.Reverse().ToArray()));
+                return;
+            }
+            // add (
+            if (l < n) {
+                stack.Push('(');
+                Bt(n, index + 1, res, stack, l + 1, r);
+                stack.Pop();
+            }
+
+            if (r < l) {
+                stack.Push(')');
+                Bt(n, index + 1, res, stack, l, r + 1);
+                stack.Pop();
             }
         }
     }
