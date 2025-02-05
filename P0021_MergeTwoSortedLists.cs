@@ -8,6 +8,25 @@ namespace NUnitTests
 {
     internal class P0021_MergeTwoSortedLists
     {
+        public class Solution {
+            public ListNode MergeTwoLists(ListNode list1, ListNode list2) {
+                var top = new ListNode();
+                var res = top;
+                while (list1 != null && list2 != null) {
+                    if (list1.val <= list2.val) {
+                        res.next = list1;
+                        list1 = list1.next;
+                    } else {
+                        res.next = list2;
+                        list2 = list2.next;
+                    }
+                    res = res.next;
+                }
+                res.next = list1 ?? list2;
+                return top.next;
+            }
+        }
+
         public class ListNode
         {
             public int val;
@@ -19,7 +38,7 @@ namespace NUnitTests
             }
         }
 
-        public class Solution
+        public class Solution2
         {
             public ListNode MergeTwoLists(ListNode list1, ListNode list2)
             {
