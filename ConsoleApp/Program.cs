@@ -11,6 +11,15 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
+            // convert Stack<char> to string
+
+            Stack<char> stackxxx = new Stack<char>();
+            stackxxx.Push('a');
+            stackxxx.Push('b');
+            stackxxx.Push('c');
+            var l = new string(stackxxx.Reverse().ToArray());
+            Console.WriteLine(l); // abc
+
             // new a list
             var res11 = new List<int>() { 1, 2, 3, 4, 5 };
             var res22 = new List<int> { 1, 2, 3, 4, 5 };
