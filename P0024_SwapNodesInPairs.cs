@@ -13,15 +13,17 @@ namespace NUnitTests
                 if (head?.next == null) return head;
                 var dummy = new ListNode();
                 var tail = dummy;
-                var first = head;
-                while (first?.next != null) {
-                    var second = first.next;
-                    var third = second?.next;
+                while (head?.next != null) {
+                    var second = head.next;
+                    var third = second.next;
+
                     tail.next = second;
-                    second.next = first;
-                    first.next = third;
-                    tail = first;
-                    first = third;
+
+                    second.next = head;
+                    head.next = third;
+
+                    tail = head;
+                    head = third;
                 }
 
                 return dummy.next;
