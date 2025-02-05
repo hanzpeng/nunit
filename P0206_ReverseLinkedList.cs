@@ -20,16 +20,14 @@ namespace NUnitTests
 
         public ListNode ReverseListIterative(ListNode head)
         {
-            ListNode pre = null;
-            var cur = head;
-            while (cur != null)
-            {
-                var next = cur.next;
-                cur.next = pre;
-                pre = cur;
-                cur = next;
+            ListNode tail = null;
+            while (head != null) {
+                var nextHead = head.next;
+                head.next = tail;
+                tail = head;
+                head = nextHead;
             }
-            return pre;
+            return tail;
         }
 
         public ListNode ReverseList2(ListNode head)
