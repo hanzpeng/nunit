@@ -3,6 +3,58 @@ using NUnit.Framework;
 
 namespace P0025_ReverseLinkedList
 {
+    public class Solution {
+        public ListNode ReverseKGroup(ListNode head, int k) {
+            ListNode res = null;
+            ListNode tail = null;
+            while (head != null) {
+                ListNode newHead;
+                ListNode revHead = head;
+
+                bool isIncompleteSection = false;
+                var pt = head;
+                for (int i = 0; i < k; i++) {
+                    if (pt == null) {
+                        isIncompleteSection = true;
+                        break;
+                    }
+                    pt = pt.next;
+                }
+                newHead = pt;
+
+                if (isIncompleteSection) {
+                    revHead = head;
+                    if (tail != null) tail.next = revHead;
+                    head = null;
+                } else {
+                    revHead = ReverseK(head, k);
+                    head.next = newHead;
+                    if (tail != null) tail.next = revHead;
+                    tail = head;
+                    head = newHead;
+                }
+
+                if (res == null) {
+                    res = revHead;
+                }
+            }
+            return res;
+        }
+
+        ListNode ReverseK(ListNode head, int k) {
+            if (head == null) return head;
+            ListNode tail = null;
+            var pt = head;
+            while (k > 0) {
+                var next = pt.next;
+                pt.next = tail;
+                tail = pt;
+                pt = next;
+                k--;
+            }
+            return tail;
+        }
+    }
     public class Solution1
     {
         public ListNode ReverseKGroup(ListNode head, int k)
