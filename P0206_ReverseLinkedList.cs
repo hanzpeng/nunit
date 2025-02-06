@@ -8,6 +8,20 @@ namespace NUnitTests
 {
     internal class P0206_ReverseLinkedList
     {
+        public class Solution {
+            public ListNode ReverseList(ListNode head) {
+                ListNode tail = null;
+                while (head != null) {
+                    var newhead = head.next;
+                    var newtail = head;
+                    head.next = tail;
+                    tail = newtail;
+                    head = newhead;
+                }
+                return tail;
+            }
+        }
+
         public ListNode ReverseListRecursive(ListNode head)
         {
             if (head == null || head.next == null) return head;
